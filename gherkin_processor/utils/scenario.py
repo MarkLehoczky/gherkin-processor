@@ -83,12 +83,15 @@ def validate(scenario_text: str, starting_position: int = 1) -> str | None:
     if lines == []:
         return "Scenario only contains empty lines or comments."
 
-    for pos, line in enumerate(lines, starting_position):
-        last_pos = pos
-        last_line = line
-
+    for pos, line in enumerate(scenario_text.splitlines(), starting_position):
         if issue_description is not None:
             return issue_description
+        
+        last_pos = pos
+        last_line = line
+        line = line.strip()
+        if line == "" or line.startswith("#"):
+            continue
 
         match status:
             case "<START OF SCENARIO>":
@@ -260,7 +263,7 @@ def __then_step(status: str, pos: int, line: str, outline: bool) -> Tuple[str, s
     d = ""     # docstring escape
     p = 0      # pipe count
 
-    if not line.startswith(("Then ", "But ", "And ", "* ", '"""', "```", "|", "Scenarios:", "Examples:")):
+    if not line.startswith(("When", "Then ", "But ", "And ", "* ", '"""', "```", "|", "Scenarios:", "Examples:")):
         m = f"Prohibited keyword in '{status}' at line [{pos}]: \"{line}\"."
     if line.startswith("But"):
         s = "BUT step"
@@ -279,7 +282,7 @@ def __then_step(status: str, pos: int, line: str, outline: bool) -> Tuple[str, s
         p = len(findall(r"(?<!\\)(\|)", line))
     if line.startswith(("Scenarios:", "Examples:")):
         if not outline:
-            m = f"Non-template SCENARIO cannot have examples in '{status}' at line [{pos}]: \"{line}\"."
+            m = f"Regular SCENARIO cannot have templates at line [{pos}]: \"{line}\"."
         s = "TEMPLATE"
 
     return s, m, d, p
@@ -307,7 +310,7 @@ def __but_step(status: str, pos: int, line: str, outline: bool) -> Tuple[str, st
         p = len(findall(r"(?<!\\)(\|)", line))
     if line.startswith(("Scenarios:", "Examples:")):
         if not outline:
-            m = f"Non-template SCENARIO cannot have examples in '{status}' at line [{pos}]: \"{line}\"."
+            m = f"Regular SCENARIO cannot have templates at line [{pos}]: \"{line}\"."
         s = "TEMPLATE"
 
     return s, m, d, p

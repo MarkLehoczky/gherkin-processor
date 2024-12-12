@@ -83,7 +83,7 @@ class Scenario:
                 
         if status.endswith("Table"):
             self.__process_table_end(status, table)
-        self.tags.sort()
+        self.tags = list(sorted(set(self.tags)))
 
 
     def __process_tags(self, line: str) -> None:
