@@ -25,7 +25,7 @@ def issue_description(scenario_text: str) -> str:
     Returns:
         bool: First scenario issue description.
     """
-    
+
     return str(validate(scenario_text))
 
 
@@ -38,7 +38,7 @@ def process(scenario_text: str, raise_error: bool = True) -> Scenario:
 
     Returns:
         Scenario: Processed scenario.
-        
+
     Raises:
         TypeError: Parameter `scenario_text` is not string type.
         ValueError: Incorrect `scenario_text` format.
@@ -49,7 +49,7 @@ def process(scenario_text: str, raise_error: bool = True) -> Scenario:
             raise TypeError("Parameter 'scenario_text' is not string type.")
         elif not is_valid(scenario_text):
             raise ValueError(issue_description(scenario_text))
-    
+
     return Scenario(scenario_text)
 
 
@@ -86,7 +86,7 @@ def validate(scenario_text: str, starting_position: int = 1) -> str | None:
     for pos, line in enumerate(scenario_text.splitlines(), starting_position):
         if issue_description is not None:
             return issue_description
-        
+
         last_pos = pos
         last_line = line
         line = line.strip()

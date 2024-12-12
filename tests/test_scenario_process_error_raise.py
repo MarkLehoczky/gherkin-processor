@@ -10,7 +10,7 @@ def test_no_scenario_name():
     with raises(ValueError) as e:
         scenario.process(text, True)
     assert str(e.value) == "Prohibited keyword in '<START OF SCENARIO>' at line [1]: \"Given a activation step happens\"."
-    
+
 
 def test_tag_after_scenario_name():
     text = (default_scenario
@@ -21,7 +21,7 @@ def test_tag_after_scenario_name():
     with raises(ValueError) as e:
         scenario.process(text, True)
     assert str(e.value) == "Prohibited keyword in 'SCENARIO name' at line [2]: \"@single\"."
-    
+
 
 def test_incorrect_step_order():
     text = (default_scenario
@@ -63,8 +63,8 @@ def test_not_closed_docstring():
     with raises(ValueError) as e:
         scenario.process(text, True)
     assert str(e.value) == "Scenario ends in 'GIVEN step document string' at line [8]: \"Then an assertion step happens\"."
-    
-    
+
+
 def test_header_only_table():
     text = (template_scenario
           + given_step
@@ -74,8 +74,8 @@ def test_header_only_table():
     with raises(ValueError) as e:
         scenario.process(text, True)
     assert str(e.value) == "Table only has header row in 'GIVEN step table header' at line [4]: \"When an action step happens\"."
-    
-    
+
+
 def test_table_column_misalignment():
     text = (template_scenario
           + given_step
@@ -85,7 +85,7 @@ def test_table_column_misalignment():
     with raises(ValueError) as e:
         scenario.process(text, True)
     assert str(e.value) == "Incorrect table format in 'GIVEN step table' at line [5]: \"| value3 |\"."
-    
+
     text = (template_scenario
           + given_step
           + too_many_column_table
