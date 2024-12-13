@@ -21,5 +21,4 @@ jobs:
       - name: Check code security
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: |
-          bandit . --recursive --exclude tests/
+        run: bandit --recursive --exclude tests/ .

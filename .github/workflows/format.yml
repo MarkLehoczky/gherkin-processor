@@ -21,7 +21,7 @@ jobs:
       - name: Check code format
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: black --check .
+        run: black --check --line-length=160 .
 
   code-style:
     name: Code Style Check

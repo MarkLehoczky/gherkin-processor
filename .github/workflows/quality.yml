@@ -40,7 +40,7 @@ jobs:
       - name: Check code type hints
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: mypy --strict --ignore-missing-imports .-fail-under=9.85 .
+        run: mypy --strict --ignore-missing-imports --fail-under=9.85 .
 
   format-check:
     name: Format Check
@@ -79,5 +79,6 @@ jobs:
       - name: Check cyclomatic complexity and maintainability index
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: radon cc --min B gherkin_processor/
-             radon mi --min B gherkin_processor/
+        run: |
+          radon cc --min B gherkin_processor/
+          radon mi --min B gherkin_processor/
