@@ -1,3 +1,5 @@
+"""Gherkin scenario dataclass."""
+
 from dataclasses import dataclass
 from re import findall, split
 from typing import Dict, List, Optional, Tuple
@@ -26,7 +28,6 @@ class Scenario:
             scenario_text (str): Gherkin scenario text.
             raise_error (bool, optional): Determines error raise for invalid scenario. Defaults to True.
         """
-
         self.tags = []
         self.name = ""
         self.steps = []
@@ -34,13 +35,12 @@ class Scenario:
 
         self.__process(scenario_text)
 
-
     def __process(self, scenario_text: str) -> None:
         status = ""
-        docstring = []
+        docstring: List[str] = []
         docstring_escape = ""
-        table = {}
-        column = {}
+        table: Dict[str, List[str]] = {}
+        column: Dict[int, str] = {}
 
         for line in scenario_text.splitlines():
 
@@ -85,7 +85,6 @@ class Scenario:
             self.__process_table_end(status, table)
         self.tags = list(sorted(set(self.tags)))
 
-
     def __process_tags(self, line: str) -> None:
         self.tags.extend(findall(r"@([^ ]*)", line))
 
@@ -95,8 +94,8 @@ class Scenario:
     def __process_step(self, line: str) -> None:
         step, description = line.split(" ", maxsplit=1)
         if step in ["And", "*"]:
-            step = self.steps[-1]["step"]
-        self.steps.append({ "step": step, "description": description })
+            step = str(self.steps[-1]["step"])
+        self.steps.append({"step": step, "description": description})
 
     def __process_docstring_begin(self, line: str) -> str:
         status = '"""' if line.strip().startswith('"""') else "```"
@@ -111,19 +110,18 @@ class Scenario:
     def __process_table_row(self, line: str, table: Dict[str, List[str]], column: Dict[int, str]) -> Tuple[Dict[str, List[str]], Dict[int, str]]:
         if table == {}:
             return self.__process_table_header(line)
-        else:
-            return self.__process_table_data(line, table, column), column
+        return self.__process_table_data(line, table, column), column
 
     def __process_table_header(self, line: str) -> Tuple[Dict[str, List[str]], Dict[int, str]]:
-        table = {}
-        columns = {}
-        for index, item in enumerate(split(r"(?<!\\)(?:\\\\)*\|", line.strip('|'))):
+        table: Dict[str, List[str]] = {}
+        columns: Dict[int, str] = {}
+        for index, item in enumerate(split(r"(?<!\\)(?:\\\\)*\|", line.strip("|"))):
             table[item.strip()] = []
-            columns.update({ index: item.strip() })
+            columns.update({index: item.strip()})
         return table, columns
 
     def __process_table_data(self, line: str, table: Dict[str, List[str]], column: Dict[int, str]) -> Dict[str, List[str]]:
-        for index, item in enumerate(split(r"(?<!\\)(?:\\\\)*\|", line.strip('|'))):
+        for index, item in enumerate(split(r"(?<!\\)(?:\\\\)*\|", line.strip("|"))):
             table[column[index]].append(item.strip())
         return table
 

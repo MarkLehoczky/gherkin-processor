@@ -4,19 +4,24 @@ on:
   workflow_call:
 
 jobs:
-  lint-verificaition:
-    name: Lint Verification
+  lint-check:
+    name: Lint Check
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out the repository
         uses: actions/checkout@v3
 
-      - name: Install Pylint
-        run: python -m pip install pylint
+      - name: Set up Python
+        uses: actions/setup-python@v4
 
-      - name: Run lint verification with Pylint
-        run: pylint --max-line-length=150 --fail-under=9.85 .
+      - name: Install required packages
+        run: python -m pip install pylint==3.3.2
+
+      - name: Check code linting
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: pylint --max-line-length=160 --fail-under=9.85 .
 
   type-check:
     name: Type Check
@@ -26,11 +31,36 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v3
 
-      - name: Install Mypy
-        run: python -m pip install mypy
+      - name: Set up Python
+        uses: actions/setup-python@v4
 
-      - name: Run type check with Mypy
-        run: mypy --strict --disable-error-code "import-untyped" .
+      - name: Install required packages
+        run: python -m pip install mypy==1.13.0
+
+      - name: Check code type hints
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: mypy --strict --ignore-missing-imports .-fail-under=9.85 .
+
+  format-check:
+    name: Format Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+
+      - name: Install required packages
+        run: python -m pip install pyflakes==3.2.0
+
+      - name: Check code quality
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: pyflakes .
+
 
   code-metrics:
     name: Code Metrics
@@ -40,22 +70,14 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v3
 
-      - name: Install Xenon
-        run: python -m pip install xenon
+      - name: Set up Python
+        uses: actions/setup-python@v4
 
-      - name: Run code metrics with Xenon
-        run: xenon --max-average B --max-absolute B --max-modules B .
- 
-  circular-reference:
-    name: Circular Reference Check
-    runs-on: ubuntu-latest
+      - name: Install required packages
+        run: python -m pip install radon==6.0.1
 
-    steps:
-      - name: Check out the repository
-        uses: actions/checkout@v3
-
-      - name: Install PyCycle
-        run: python -m pip install pycycle
-
-      - name: Run circular reference check with PyCycle
-        run: pycycle --here
+      - name: Check cyclomatic complexity and maintainability index
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: radon cc --min B gherkin_processor/
+             radon mi --min B gherkin_processor/

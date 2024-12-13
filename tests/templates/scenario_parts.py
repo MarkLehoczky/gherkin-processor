@@ -1,26 +1,30 @@
-single_tag = "@single\n"
-multiple_tags = "@multiple @tags\n"
-default_scenario = "Scenario: Default scenario\n"
-template_scenario = "Scenario Template: Template scenario\n"
+"""Constant scenario part file."""
 
-given_step = "Given a activation step happens\n"
-when_step = "When an action step happens\n"
-then_step = "Then an assertion step happens\n"
-but_step = "But an assertion step does not happen\n"
-and_step = "And an repeated step happens\n"
-asterisk_step = "* an repeated step happens\n"
+SINGLE_TAG = "@single\n"
+MULTIPLE_TAGS = "@multiple @tags\n"
+DEFAULT_SCENARIO = "Scenario: Default scenario\n"
+TEMPLATE_SCENARIO = "Scenario Template: Template scenario\n"
 
-single_column_table = "| Key    |\n| value1 |\n| value2 |\n| value3 |\n"
-multiple_column_table = "| Key1   | Key2   |\n| value1 | value2 |\n| value3 | value4 |\n| value5 | value6 |\n"
+GIVEN_STEP = "Given a activation step happens\n"
+WHEN_STEP = "When an action step happens\n"
+THEN_STEP = "Then an assertion step happens\n"
+BUT_STEP = "But an assertion step does not happen\n"
+AND_STEP = "And an repeated step happens\n"
+ASTERISK_STEP = "* an repeated step happens\n"
 
-text_docstring = "\"\"\"\nThis is the first line.\nThis is the second line.\nThis is the third line.\n\"\"\"\n"
-code_docstring = "\"\"\"python\nvariable: str = \"Variable\"\nprint(variable + \" text\")\n\"\"\"\n"
+SINGLE_COLUMN_TABLE = "| Key    |\n| value1 |\n| value2 |\n| value3 |\n"
+MULTIPLE_COLUMN_TABLE = "| Key1   | Key2   |\n| value1 | value2 |\n| value3 | value4 |\n| value5 | value6 |\n"
 
-template_table = "Examples:\n| Template1 | Template2 |\n| value1    | value2    |\n| value3    | value4    |\n| value5    | value6    |\n| value7    | value8    |\n"
+TEXT_DOCSTRING = '"""\nThis is the first line.\nThis is the second line.\nThis is the third line.\n"""\n'
+CODE_DOCSTRING = '"""python\nvariable: str = "Variable"\nprint(variable + " text")\n"""\n'
+
+TEMPLATE_TABLE = (
+    "Examples:\n| Template1 | Template2 |\n| value1    | value2    |\n| value3    | value4    |\n| value5    | value6    |\n| value7    | value8    |\n"
+)
 
 
-not_closed_text_docstring =  "\"\"\"\nThis is the first line.\nThis is the second line.\nThis is the third line.\n"
+NOT_CLOSED_TEXT_DOCSTRING = '"""\nThis is the first line.\nThis is the second line.\nThis is the third line.\n'
 
-header_only_table = "| Key1   | Key2   |\n"
-not_enough_column_table = "| Key1   | Key2   |\n| value1 | value2 |\n| value3 |\n| value5 | value6 |\n"
-too_many_column_table = "| Key1   | Key2   |\n| value1 | value2 |\n| value3 | value4 |\n| value5 | value6 | value7 |\n"
+HEADER_ONLY_TABLE = "| Key1   | Key2   |\n"
+NOT_ENOUGH_COLUMN_TABLE = "| Key1   | Key2   |\n| value1 | value2 |\n| value3 |\n| value5 | value6 |\n"
+TOO_MANY_COLUMN_TABLE = "| Key1   | Key2   |\n| value1 | value2 |\n| value3 | value4 |\n| value5 | value6 | value7 |\n"

@@ -1,3 +1,5 @@
+"""Utilities for Gherkin scenarios."""
+
 from re import findall
 from typing import Tuple
 
@@ -25,7 +27,6 @@ def issue_description(scenario_text: str) -> str:
     Returns:
         bool: First scenario issue description.
     """
-
     return str(validate(scenario_text))
 
 
@@ -43,15 +44,13 @@ def process(scenario_text: str, raise_error: bool = True) -> Scenario:
         TypeError: Parameter `scenario_text` is not string type.
         ValueError: Incorrect `scenario_text` format.
     """
-
     if raise_error:
         if not isinstance(scenario_text, str):
             raise TypeError("Parameter 'scenario_text' is not string type.")
-        elif not is_valid(scenario_text):
+        if not is_valid(scenario_text):
             raise ValueError(issue_description(scenario_text))
 
     return Scenario(scenario_text)
-
 
 
 def validate(scenario_text: str, starting_position: int = 1) -> str | None:
@@ -64,7 +63,6 @@ def validate(scenario_text: str, starting_position: int = 1) -> str | None:
     Returns:
         str | None: Issue description if the scenario is invalid, otherwise None.
     """
-
     status: str = "<START OF SCENARIO>"
     outline: bool = False
     docstring_escape: str = ""
@@ -78,7 +76,7 @@ def validate(scenario_text: str, starting_position: int = 1) -> str | None:
     if scenario_text == "":
         return "Scenario is empty."
 
-    lines = [line.strip() for line in scenario_text.splitlines() if line.strip() and not line.strip().startswith('#')]
+    lines = [line.strip() for line in scenario_text.splitlines() if line.strip() and not line.strip().startswith("#")]
 
     if lines == []:
         return "Scenario only contains empty lines or comments."
@@ -168,7 +166,7 @@ def validate(scenario_text: str, starting_position: int = 1) -> str | None:
         "THEN step document string",
         "BUT step document string",
         "TEMPLATE",
-        "TEMPLATE header"
+        "TEMPLATE header",
     ]:
         issue_description = f"Scenario ends in '{status}' at line [{last_pos}]: \"{last_line}\"."
     elif outline and not status.startswith("TEMPLATE"):
@@ -182,8 +180,8 @@ def validate(scenario_text: str, starting_position: int = 1) -> str | None:
 
 
 def __scenario_beginning(status: str, pos: int, line: str) -> Tuple[str, str | None, bool]:
-    s = status # status
-    m = None   # message
+    s = status  # status
+    m = None  # message
     o = False  # outline
 
     if not line.startswith(("@", "Scenario:", "Scenario Template:", "Scenario Outline:", "Example:")):
@@ -195,9 +193,10 @@ def __scenario_beginning(status: str, pos: int, line: str) -> Tuple[str, str | N
 
     return s, m, o
 
+
 def __scenario_name(status: str, pos: int, line: str) -> Tuple[str, str | None]:
-    s = status # status
-    m = None   # message
+    s = status  # status
+    m = None  # message
 
     if not line.startswith("Given "):
         m = f"Prohibited keyword in '{status}' at line [{pos}]: \"{line}\"."
@@ -205,11 +204,12 @@ def __scenario_name(status: str, pos: int, line: str) -> Tuple[str, str | None]:
 
     return s, m
 
+
 def __given_step(status: str, pos: int, line: str) -> Tuple[str, str | None, str, int]:
-    s = status # status
-    m = None   # message
-    d = ""     # docstring escape
-    p = 0      # pipe count
+    s = status  # status
+    m = None  # message
+    d = ""  # docstring escape
+    p = 0  # pipe count
 
     if not line.startswith(("Given ", "When ", "And ", "* ", '"""', "```", "|")):
         m = f"Prohibited keyword in '{status}' at line [{pos}]: \"{line}\"."
@@ -217,7 +217,7 @@ def __given_step(status: str, pos: int, line: str) -> Tuple[str, str | None, str
         s = "WHEN step"
     if line.startswith('"""'):
         if line.removeprefix('"""') and not line.removeprefix('"""').isalpha():
-            m = f"Document string opening cannot have non-alpha characters after \"\"\" in '{status}' at line [{pos}]: \"{line}\"."
+            m = f'Document string opening cannot have non-alpha characters after """ in \'{status}\' at line [{pos}]: "{line}".'
         s = "GIVEN step document string"
         d = '"""'
     if line.startswith("```"):
@@ -231,11 +231,12 @@ def __given_step(status: str, pos: int, line: str) -> Tuple[str, str | None, str
 
     return s, m, d, p
 
+
 def __when_step(status: str, pos: int, line: str) -> Tuple[str, str | None, str, int]:
-    s = status # status
-    m = None   # message
-    d = ""     # docstring escape
-    p = 0      # pipe count
+    s = status  # status
+    m = None  # message
+    d = ""  # docstring escape
+    p = 0  # pipe count
 
     if not line.startswith(("When ", "Then ", "And ", "* ", '"""', "```", "|")):
         m = f"Prohibited keyword in '{status}' at line [{pos}]: \"{line}\"."
@@ -243,7 +244,7 @@ def __when_step(status: str, pos: int, line: str) -> Tuple[str, str | None, str,
         s = "THEN step"
     if line.startswith('"""'):
         if line.removeprefix('"""') and not line.removeprefix('"""').isalpha():
-            m = f"Document string opening cannot have non-alpha characters after \"\"\" in '{status}' at line [{pos}]: \"{line}\"."
+            m = f'Document string opening cannot have non-alpha characters after """ in \'{status}\' at line [{pos}]: "{line}".'
         s = "WHEN step document string"
         d = '"""'
     if line.startswith("```"):
@@ -257,19 +258,33 @@ def __when_step(status: str, pos: int, line: str) -> Tuple[str, str | None, str,
 
     return s, m, d, p
 
-def __then_step(status: str, pos: int, line: str, outline: bool) -> Tuple[str, str | None, str, int]:
-    s = status # status
-    m = None   # message
-    d = ""     # docstring escape
-    p = 0      # pipe count
 
-    if not line.startswith(("When", "Then ", "But ", "And ", "* ", '"""', "```", "|", "Scenarios:", "Examples:")):
+def __then_step(status: str, pos: int, line: str, outline: bool) -> Tuple[str, str | None, str, int]:
+    s = status  # status
+    m = None  # message
+    d = ""  # docstring escape
+    p = 0  # pipe count
+
+    if not line.startswith(
+        (
+            "When",
+            "Then ",
+            "But ",
+            "And ",
+            "* ",
+            '"""',
+            "```",
+            "|",
+            "Scenarios:",
+            "Examples:",
+        )
+    ):
         m = f"Prohibited keyword in '{status}' at line [{pos}]: \"{line}\"."
     if line.startswith("But"):
         s = "BUT step"
     if line.startswith('"""'):
         if line.removeprefix('"""') and not line.removeprefix('"""').isalpha():
-            m = f"Document string opening cannot have non-alpha characters after \"\"\" in '{status}' at line [{pos}]: \"{line}\"."
+            m = f'Document string opening cannot have non-alpha characters after """ in \'{status}\' at line [{pos}]: "{line}".'
         s = "THEN step document string"
         d = '"""'
     if line.startswith("```"):
@@ -282,22 +297,23 @@ def __then_step(status: str, pos: int, line: str, outline: bool) -> Tuple[str, s
         p = len(findall(r"(?<!\\)(\|)", line))
     if line.startswith(("Scenarios:", "Examples:")):
         if not outline:
-            m = f"Regular SCENARIO cannot have templates at line [{pos}]: \"{line}\"."
+            m = f'Regular SCENARIO cannot have templates at line [{pos}]: "{line}".'
         s = "TEMPLATE"
 
     return s, m, d, p
 
+
 def __but_step(status: str, pos: int, line: str, outline: bool) -> Tuple[str, str | None, str, int]:
-    s = status # status
-    m = None   # message
-    d = ""     # docstring escape
-    p = 0      # pipe count
+    s = status  # status
+    m = None  # message
+    d = ""  # docstring escape
+    p = 0  # pipe count
 
     if not line.startswith(("But ", "And ", "* ", '"""', "```", "|", "Scenarios:", "Examples:")):
         m = f"Prohibited keyword in '{status}' at line [{pos}]: \"{line}\"."
     if line.startswith('"""'):
         if line.removeprefix('"""') and not line.removeprefix('"""').isalpha():
-            m = f"Document string opening cannot have non-alpha characters after \"\"\" in '{status}' at line [{pos}]: \"{line}\"."
+            m = f'Document string opening cannot have non-alpha characters after """ in \'{status}\' at line [{pos}]: "{line}".'
         s = "BUT step document string"
         d = '"""'
     if line.startswith("```"):
@@ -310,14 +326,15 @@ def __but_step(status: str, pos: int, line: str, outline: bool) -> Tuple[str, st
         p = len(findall(r"(?<!\\)(\|)", line))
     if line.startswith(("Scenarios:", "Examples:")):
         if not outline:
-            m = f"Regular SCENARIO cannot have templates at line [{pos}]: \"{line}\"."
+            m = f'Regular SCENARIO cannot have templates at line [{pos}]: "{line}".'
         s = "TEMPLATE"
 
     return s, m, d, p
 
+
 def __step_table_header(status: str, pos: int, line: str, pipe_count: int) -> Tuple[str, str | None]:
-    s = status # status
-    m = None   # message
+    s = status  # status
+    m = None  # message
 
     if not line.startswith("|"):
         m = f"Table only has header row in '{status}' at line [{pos}]: \"{line}\"."
@@ -327,9 +344,10 @@ def __step_table_header(status: str, pos: int, line: str, pipe_count: int) -> Tu
 
     return s, m
 
+
 def __step_doc_string(status: str, pos: int, line: str, docstring_escape: str) -> Tuple[str, str | None]:
-    s = status # status
-    m = None   # message
+    s = status  # status
+    m = None  # message
 
     if line.startswith(docstring_escape):
         if line != docstring_escape:
@@ -338,9 +356,10 @@ def __step_doc_string(status: str, pos: int, line: str, docstring_escape: str) -
 
     return s, m
 
+
 def __given_step_table(status: str, pos: int, line: str, pipe_count: int) -> Tuple[str, str | None]:
-    s = status # status
-    m = None   # message
+    s = status  # status
+    m = None  # message
 
     if not line.startswith(("Given ", "When ", "And ", "* ", "|")):
         m = f"Prohibited keyword in '{status}' at line [{pos}]: \"{line}\"."
@@ -353,9 +372,10 @@ def __given_step_table(status: str, pos: int, line: str, pipe_count: int) -> Tup
 
     return s, m
 
+
 def __when_step_table(status: str, pos: int, line: str, pipe_count: int) -> Tuple[str, str | None]:
-    s = status # status
-    m = None   # message
+    s = status  # status
+    m = None  # message
 
     if not line.startswith(("When ", "Then ", "And ", "* ", "|")):
         m = f"Prohibited keyword in '{status}' at line [{pos}]: \"{line}\"."
@@ -368,9 +388,10 @@ def __when_step_table(status: str, pos: int, line: str, pipe_count: int) -> Tupl
 
     return s, m
 
+
 def __then_step_table(status: str, pos: int, line: str, pipe_count: int, outline: bool) -> Tuple[str, str | None]:
-    s = status # status
-    m = None   # message
+    s = status  # status
+    m = None  # message
 
     if not line.startswith(("Then ", "But ", "And ", "* ", "|", "Scenarios:", "Examples:")):
         m = f"Prohibited keyword in '{status}' at line [{pos}]: \"{line}\"."
@@ -382,14 +403,15 @@ def __then_step_table(status: str, pos: int, line: str, pipe_count: int, outline
         s = "BUT step"
     elif line.startswith(("Scenarios:", "Examples:")):
         if not outline:
-            m = f"Regular SCENARIO cannot have templates at line [{pos}]: \"{line}\"."
+            m = f'Regular SCENARIO cannot have templates at line [{pos}]: "{line}".'
         s = "TEMPLATE"
 
     return s, m
 
+
 def __but_step_table(status: str, pos: int, line: str, pipe_count: int, outline: bool) -> Tuple[str, str | None]:
-    s = status # status
-    m = None   # message
+    s = status  # status
+    m = None  # message
 
     if not line.startswith(("But ", "And ", "* ", "|", "Scenarios:", "Examples:")):
         m = f"Prohibited keyword in '{status}' at line [{pos}]: \"{line}\"."
@@ -399,15 +421,16 @@ def __but_step_table(status: str, pos: int, line: str, pipe_count: int, outline:
         s = "BUT step"
     elif line.startswith(("Scenarios:", "Examples:")):
         if not outline:
-            m = f"Regular SCENARIO cannot have templates at line [{pos}]: \"{line}\"."
+            m = f'Regular SCENARIO cannot have templates at line [{pos}]: "{line}".'
         s = "TEMPLATE"
 
     return s, m
 
+
 def __template(status: str, pos: int, line: str) -> Tuple[str, str | None, int]:
-    s = status # status
-    m = None   # message
-    p = 0      # pipe count
+    s = status  # status
+    m = None  # message
+    p = 0  # pipe count
 
     if not line.startswith("|"):
         m = f"Prohibited keyword in '{status}' at line [{pos}]: \"{line}\"."
@@ -416,9 +439,10 @@ def __template(status: str, pos: int, line: str) -> Tuple[str, str | None, int]:
 
     return s, m, p
 
+
 def __template_table(status: str, pos: int, line: str, pipe_count: int) -> Tuple[str, str | None]:
-    s = status # status
-    m = None   # message
+    s = status  # status
+    m = None  # message
 
     if not line.startswith("|"):
         m = f"Prohibited keyword in '{status}' at line [{pos}]: \"{line}\"."
