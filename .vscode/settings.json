@@ -41,9 +41,9 @@
     // https://marketplace.visualstudio.com/items?itemName=ms-python.python
     "python.testing.autoTestDiscoverOnSaveEnabled": true,
     "python.testing.pytestArgs": [
-        "tests/",
         "--cov",
-        "--cov-fail-under=80"
+        "--cov-fail-under=80",
+        "tests/"
     ],
     "python.testing.pytestEnabled": true,
     "python.testing.unittestEnabled": false,
