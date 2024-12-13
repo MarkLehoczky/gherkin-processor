@@ -1,0 +1,37 @@
+name: Code Format
+
+on:
+  workflow_call:
+
+jobs:
+  code-format:
+    name: Code Format Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Install Black
+        run: python -m pip install black
+
+      - name: Run code format check with Black
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: black --check .
+
+  code-documentation:
+    name: Code Documentation Format Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Install PyDocStyle
+        run: python -m pip install pydocstyle
+
+      - name: Run code format check with PyDocStyle
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: pydocstyle .

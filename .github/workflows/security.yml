@@ -1,0 +1,23 @@
+name: Project Security
+
+on:
+  workflow_call:
+
+jobs:
+  code-security:
+    name: Code Security
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Install Bandit and Dodgy
+        run: python -m pip install bandit dodgy
+
+      - name: Run code security check with Bandit and Dodgy
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          bandit .
+          dodgy .

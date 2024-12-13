@@ -1,0 +1,35 @@
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Functionality:
+    strategy:
+      matrix:
+        task: [""]
+    name: Core Functionality
+    uses: ./.github/workflows/functionality.yml
+
+  Security:
+    strategy:
+      matrix:
+        task: [""]
+    name: Project Security
+    uses: ./.github/workflows/security.yml
+
+  Quality:
+    strategy:
+      matrix:
+        task: [""]
+    name: Code Quality
+    uses: ./.github/workflows/quality.yml
+
+  Format:
+    strategy:
+      matrix:
+        task: [""]
+    name: Code Format
+    uses: ./.github/workflows/format.yml

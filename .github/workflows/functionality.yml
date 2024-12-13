@@ -1,0 +1,131 @@
+name: Core Functionality
+
+on:
+  workflow_call:
+
+jobs:
+  windows-minimum-test:
+    name: Test - Windows (python 3.10)
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Pytest
+        run: python -m pip install pytest==8.3.4
+
+      - name: Run tests with Pytest
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: pytest tests/
+
+  windows-latest-test:
+    name: Test - Windows (python 3.x-latest)
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up latest Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Pytest
+        run: python -m pip install pytest==8.3.4
+
+      - name: Run tests with Pytest
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: pytest tests/
+        
+  linux-minimum-test:
+    name: Test - Linux (python 3.10)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Pytest
+        run: python -m pip install pytest==8.3.4
+
+      - name: Run tests with Pytest
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: pytest tests/
+
+  linux-latest-test:
+    name: Test - Linux (python 3.x-latest)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up latest Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Pytest
+        run: python -m pip install pytest==8.3.4
+
+      - name: Run tests with Pytest
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: pytest tests/
+        
+  macos-minimum-test:
+    name: Test - MacOS (python 3.10)
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Pytest
+        run: python -m pip install pytest==8.3.4
+
+      - name: Run tests with Pytest
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: pytest tests/
+
+  macos-latest-test:
+    name: Test - MacOS (python 3.x-latest)
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up latest Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Pytest
+        run: python -m pip install pytest==8.3.4
+
+      - name: Run tests with Pytest
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: pytest tests/
