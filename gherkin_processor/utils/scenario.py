@@ -27,7 +27,7 @@ def issue_description(scenario_text: str) -> str:
     Returns:
         bool: First scenario issue description.
     """
-    return str(validate(scenario_text))
+    return str(validate(scenario_text)) if not is_valid(scenario_text) else ""
 
 
 def process(scenario_text: str, raise_error: bool = True) -> Scenario:
