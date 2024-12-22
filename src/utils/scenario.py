@@ -1,12 +1,29 @@
 """Utilities for Gherkin scenarios."""
 
+from dataclasses import asdict
+from json import dumps
 from re import findall
 from typing import Tuple
 
 try:
-    from gherkin_processor import Scenario
+    from gherkin_processor.scenario import Scenario
 except ImportError:
-    from src import Scenario
+    from src.scenario import Scenario
+
+
+def load(file_path: str, raise_error: bool = True) -> Scenario:
+    with open(file_path, "r", encoding="utf-8", errors="backslashreplace") as file:
+        return process(file.read(), raise_error)
+
+
+def save(scenario: Scenario, file_path: str) -> None:
+    with open(file_path, "w", encoding="utf-8", errors="backslashreplace") as file:
+        file.write(str(scenario))
+
+
+def save_as_json(scenario: Scenario, file_path: str) -> None:
+    with open(file_path, "w", encoding="utf-8", errors="backslashreplace") as file:
+        file.write(dumps(asdict(scenario), indent=4))
 
 
 def is_valid(scenario_text: str) -> bool:
