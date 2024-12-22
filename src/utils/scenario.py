@@ -3,7 +3,10 @@
 from re import findall
 from typing import Tuple
 
-from gherkin_processor.scenario import Scenario
+try:
+    from gherkin_processor import Scenario
+except ImportError:
+    from src import Scenario
 
 
 def is_valid(scenario_text: str) -> bool:

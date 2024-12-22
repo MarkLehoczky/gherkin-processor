@@ -1,23 +1,35 @@
-"""Setup file."""
+from setuptools import setup
 
-from setuptools import find_packages, setup
 
-if __name__ == "__main__":
-    with open("README.md", "r", encoding="utf-8") as readme:
-        setup(
-            name="gherkin-processor",
-            version="0.0.1",
-            author="Mark Lehoczky",
-            author_email="mark.lehoczky@gmail.com",
-            description="A Python package that converts Gherkin scenarios into Python `dataclass` objects.",
-            long_description=readme.read(),
-            long_description_content_type="text/markdown",
-            url="https://github.com/MarkLehoczky/gherkin-processor",
-            packages=find_packages(),
-            classifiers=[
-                "Programming Language :: Python :: 3",
-                "License :: OSI Approved :: MIT License",
-                "Operating System :: OS Independent",
-            ],
-            python_requires=">=3.10",
-        )
+setup(
+    name="gherkin-processor",
+    version="0.0.1",
+    description="A project that processes Gherkin files into Python dataclasses.",
+    long_description=open("README.md", "r").read(),
+    long_description_content_type="text/markdown",
+    author="Mark Lehoczky",
+    author_email="mark.lehoczky@gmail.com",
+    url="https://github.com/MarkLehoczky/gherkin-processor",
+    classifiers=[
+        "Development Status :: 1 - Planning",
+        "Environment :: Console",
+        "Framework :: Pytest",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Natural Language :: English",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.10",
+        "Topic :: Software Development :: Testing",
+        "Topic :: Software Development :: Testing :: BDD",
+        "Topic :: Utilities",
+    ],
+    entry_points={
+        "console_scripts": [
+            "gherkin-processor=gherkin_processor:main",
+        ],
+    },
+    license="MIT License",
+    package_dir={"gherkin_processor": "src"},
+    python_requires=">=3.10",
+)
