@@ -3,7 +3,7 @@
 from pytest import raises
 
 
-from src.utils import scenario
+from gherkin_processor.utils import scenario
 from tests.templates.scenario_parts import (
     DEFAULT_SCENARIO,
     GIVEN_STEP,

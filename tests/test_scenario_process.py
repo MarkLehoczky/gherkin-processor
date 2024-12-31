@@ -1,6 +1,6 @@
 """Test file."""
 
-from src.utils import scenario
+from gherkin_processor.utils import scenario
 from tests.templates.scenario_parts import (
     CODE_DOCSTRING,
     DEFAULT_SCENARIO,

@@ -2,12 +2,8 @@
 
 import os
 
-try:
-    from gherkin_processor.scenario import Scenario
-    from gherkin_processor.utils.scenario import load, save, save_as_json
-except ImportError:
-    from scenario import Scenario
-    from utils.scenario import load, save, save_as_json
+from gherkin_processor.scenario import Scenario
+from gherkin_processor.utils.scenario import load, save, save_as_json
 
 import argparse
 
@@ -49,3 +45,7 @@ def main() -> None:
 
     if args.save_as_json:
         save_as_json(scenario, f"{directory}/{name}_processed.json")
+
+
+if __name__ == "__main__":
+    main()

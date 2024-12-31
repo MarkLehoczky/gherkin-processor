@@ -30,6 +30,6 @@ setup(
         ],
     },
     license="MIT License",
-    package_dir={"gherkin_processor": "src"},
+    package_dir={"gherkin_processor": "gherkin_processor"},
     python_requires=">=3.10",
 )

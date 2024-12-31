@@ -5,10 +5,7 @@ from json import dumps
 from re import findall
 from typing import Tuple
 
-try:
-    from gherkin_processor.scenario import Scenario
-except ImportError:
-    from src.scenario import Scenario
+from gherkin_processor.scenario import Scenario
 
 
 def load(file_path: str, raise_error: bool = True) -> Scenario:
