@@ -21,7 +21,7 @@ jobs:
       - name: Check code format
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: black --check --line-length=160 gherkin_processor/
+        run: black --check --line-length=160 src/
 
   code-style:
     name: Code Style Check
@@ -40,7 +40,7 @@ jobs:
       - name: Check code style
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: pycodestyle --max-line-length=160 gherkin_processor/
+        run: pycodestyle --max-line-length=160 src/
 
   documentation-style:
     name: Documentation Style Check
@@ -59,5 +59,5 @@ jobs:
       - name: Check documentation style
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: pydocstyle gherkin_processor/
+        run: pydocstyle src/
       

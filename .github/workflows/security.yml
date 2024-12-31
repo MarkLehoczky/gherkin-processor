@@ -21,4 +21,4 @@ jobs:
       - name: Check code security
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: bandit --recursive gherkin_processor/
+        run: bandit --recursive src/

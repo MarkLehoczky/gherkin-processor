@@ -21,7 +21,7 @@ jobs:
       - name: Check code linting
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: pylint --max-line-length=160 --fail-under=9.85 gherkin_processor/
+        run: pylint --max-line-length=160 --fail-under=9.85 src/
 
   type-check:
     name: Type Check
@@ -40,7 +40,7 @@ jobs:
       - name: Check code type hints
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: mypy --strict --ignore-missing-imports gherkin_processor/
+        run: mypy --strict --ignore-missing-imports src/
 
   format-check:
     name: Format Check
@@ -59,7 +59,7 @@ jobs:
       - name: Check code quality
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: pyflakes gherkin_processor/
+        run: pyflakes src/
 
 
   code-metrics:
@@ -80,5 +80,5 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
-          radon cc --min B gherkin_processor/
-          radon mi --min B gherkin_processor/
+          radon cc --min B src/
+          radon mi --min B src/
