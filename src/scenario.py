@@ -5,6 +5,28 @@ from re import findall, split
 from typing import Dict, List, Optional, Tuple
 
 
+def build_table(table: Dict[str, List[str]]) -> str:
+    column_widths = {h: max(len(h), *(len(row) for row in table[h])) for h in table}
+    header_row = "| " + " | ".join(f"{h:{column_widths[h]}}" for h in table) + " |"
+    rows = []
+    num_rows = min(len(col) for col in table.values())
+    for i in range(num_rows):
+        row = "| " + " | ".join(f"{table[h][i]:{column_widths[h]}}" for h in table) + " |"
+        rows.append(row)
+    return header_row + "\n" + "\n".join(rows)
+
+
+def build_steps(steps: List[Dict[str, Dict[str, List[str]] | str]]) -> str:
+    step_lines = []
+    for step in steps:
+        step_lines.append(f"{step['step']} {step['description']}")
+        if "table" in step:
+            step_lines.append(build_table(step["table"]))
+        if "docstring" in step:
+            step_lines.append(f'"""{step.get("docstring-language", "")}\n{step["docstring"]}\n"""')
+    return "\n".join(step_lines)
+
+
 @dataclass
 class Scenario:
     """Process Gherkin scenario into dataclass as parts.
@@ -34,6 +56,17 @@ class Scenario:
         self.template_table = None
 
         self.__process(scenario_text)
+
+    def is_template(self) -> bool:
+        return self.template_table is not None
+
+    def __str__(self) -> str:
+        text = "\n".join(f"@{t}" for t in self.tags)
+        text += f"\n{"Scenario Template" if self.is_template() else "Scenario"}: {self.name}"
+        text += "\n" + build_steps(self.steps)
+        if self.is_template():
+            text += f"\n{"Scenarios"}:\n{build_table(self.template_table)}"
+        return text
 
     def __process(self, scenario_text: str) -> None:
         status = ""

@@ -26,15 +26,13 @@
     // https://marketplace.visualstudio.com/items?itemName=ms-python.mypy-type-checker
     "mypy-type-checker.args": [
         "--strict",
-        "--ignore-missing-imports"
-    ],
-    "mypy-type-checker.ignorePatterns": [
-        "**/site-packages/**/*.py"
+        "gherkin_processor/"
     ],
 
     // https://marketplace.visualstudio.com/items?itemName=ms-python.pylint
     "pylint.args": [
-        "--max-line-length=160"
+        "--max-line-length=160",
+        "gherkin_processor/"
     ],
     "pylint.enabled": true,
 
