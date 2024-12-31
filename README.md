@@ -2,7 +2,7 @@
 
 # GHERKIN PROCESSOR
 
-A Python package that converts Gherkin scenarios into Python dataclass objects. It offers flexible conversion with strict or relaxed validation of the Gherkin syntax.
+**Gherkin Processor** is a Python package that processes Gherkin files into Python *dataclasses*. It provides utilities for validating, processing, and saving Gherkin scenarios in both text and JSON formats.
 
 ---
 
@@ -21,105 +21,80 @@ A Python package that converts Gherkin scenarios into Python dataclass objects. 
 
 ## Features
 
-- Converts Gherkin scenarios into Python `dataclasses` for easy manipulation and analysis.
-- Supports strict format validation, ensuring the Gherkin scenarios follow the correct syntax.
-- Allows conversion of scenarios even with minor syntax errors, making it more robust.
-- Built-in flexibility for customization and extension.
+- Gherkin scenario validation
+- Gherkin scenario syntax issue description
+- Gherkin scenario content processing into Python dataclass
+- Save processed scenarios in text or JSON format
+- Directly load scenarios from file paths
 
 ## Installation
 
-```shell
-# 1. Clone the Github repository
+You can install the **Gherkin Processor** package by cloning the repository or downloading from the releases.
+
+### Clone the Repository
+
+```sh
+# 1. Clone the repository
 git clone https://github.com/MarkLehoczky/gherkin-processor.git
 
-# 2. Install package with pip
-pip install gherkin-processor
+# 2. Navigate to the cloned directory
+cd gherkin-processor
+
+# Install the package via 'pip'
+pip install .
+```
+
+### Download from Releases
+
+1. Go to the [Releases](https://github.com/MarkLehoczky/gherkin-processor/releases) page.
+2. Download the latest release.
+3. Extract the downloaded file.
+4. Navigate to the extracted directory.
+5. Install the package with the following command:
+
+```sh
+pip install .
 ```
 
 ## Usage
 
-### Script
+### Command Line Interface
+
+The **Gherkin Processor** can be used via the command line interface (CLI).
+
+```sh
+gherkin-processor [-h] -i INPUT [-p] [-s] [--save-as-json] [--validate]
+```
+
+#### Options
+
+```text
+-h, --help                 show this help message and exit
+-i INPUT, --input INPUT    specify the input Gherkin file location to process
+-p, --print                print the processed Gherkin scenario to the standard output
+-s, --save                 save the processed Gherkin scenario to a file
+--save-as-json             save the processed Gherkin scenario to a file in JSON format
+--validate                 validate the input Gherkin file syntax
+```
+
+See the [CLI examples](examples/cli.ipynb) for details.
+
+### Python API
+
+The **Gherkin Processor** can also be used programmatically in a Python code.
 
 ```python
-from dataclasses import asdict
-from json import dumps
+from gherkin_processor.utils import scenario    # file
+from gherkin_processor.scenario import Scenario # class
 
-from gherkin_processor.utils import scenario
-from gherkin_processor.scenario import Scenario
+# Load and process the scenario from a file
+processed_scenario: Scenario = scenario.load("path/to/scenario.feature")
 
-# Loads a Gherkin scenario from a file and processes it into a python data class.
-with open("scenario.txt", "r", encoding="utf-8") as scenario_text_file:
-    scenario_text: str = scenario_text_file.read()
-    scenario_instance: Scenario = scenario.process(scenario_text)
-
-    # Prints some of the scenario components to the standard output.
-    print(", ".join(scenario_instance.tags))
-    print(scenario_instance.name)
-
-    # Converts the scenario into dictionary format, then saves it as a json.
-    with open("scenario.json", "w") as scenario_json_file:
-        scenario_json: dict = asdict(scenario_instance)
-        scenario_json_file.write(dumps(scenario_json, indent=4))
+# Save the processed scenario to a file
+scenario.save(processed_scenario, "path/to/saved_scenario.feature")
 ```
 
-## Dataclass Structure
-
-The resulting Python dataclass structure represents the Gherkin scenario hierarchy. Here's an example of what the structure looks like:
-
-```python
-@dataclass
-class Scenario:
-    tags: List[str]
-    name: str
-    steps: List[Dict[str, Dict[str, List[str]] | str]]
-    template_table: Optional[Dict[str, List[str]]]
-```
-
-*Depending whether a step is followed by docstring or table, the `steps` variable's structure may change.*
-
-## Prerequisites
-
-### Mandatory
-
-- Python 3.10 or newer version
-
-### Advised
-
-#### VSCode extensions
-
-The following extensions are listed in the `.vscode/extensions.json` file.
-
-- [autoDocstring - Python Docstring Generator](https://marketplace.visualstudio.com/items?itemName=njpwerner.autodocstring)
-- [autoflake](https://marketplace.visualstudio.com/items?itemName=mikoz.autoflake-extension)
-- [Black Formatter](https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter)
-- [Mypy Type Checker](https://marketplace.visualstudio.com/items?itemName=ms-python.mypy-type-checker)
-- [Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance)
-- [Pylint](https://marketplace.visualstudio.com/items?itemName=ms-python.pylint)
-- [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
-- [Python Debugger](https://marketplace.visualstudio.com/items?itemName=ms-python.debugpy)
-- [Python Docstring Highlighter](https://marketplace.visualstudio.com/items?itemName=rodolphebarbanneau.python-docstring-highlighter)
-- [Python Test Explorer for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=littlefoxteam.vscode-python-test-adapter)
-- [Python Type Hint](https://marketplace.visualstudio.com/items?itemName=njqdev.vscode-python-typehint)
-
-#### Python packages
-
-The following packages are listed in the `requirements.txt` file.
-To install them simply use the following command:
-
-```shell
-pip install -r requirements.txt
-```
-
-- pylint
-- mypy
-- pyflakes
-- radon
-- black
-- pycodestyle
-- pydocstyle
-- bandit
-- pytest
-- pytest-cov
+See the [API examples](examples/api.ipynb) and [Data class structure](examples/data.ipynb) for details.
 
 ## License
 
