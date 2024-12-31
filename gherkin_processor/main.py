@@ -1,15 +1,14 @@
 """Main module."""
 
+import argparse
 import os
 
 from gherkin_processor.scenario import Scenario
 from gherkin_processor.utils.scenario import load, save, save_as_json
 
-import argparse
-
 
 def main() -> None:
-    """Main method."""
+    """Entrance point for the command line interface."""
     parser = argparse.ArgumentParser(description="Gherkin Scenario processor")
     parser.add_argument("-i", "--input", type=str, required=True, help="Input file to process")
     parser.add_argument(
@@ -33,8 +32,14 @@ def main() -> None:
         directory, name = os.path.split(path)
         name, extension = os.path.splitext(name)
         scenario: Scenario = load(path, args.validate)
-    except IOError | ValueError | TypeError as e:
-        print(f"Error: {e}")
+    except IOError as e:
+        print(f"IOError: {e}")
+        return
+    except TypeError as e:
+        print(f"TypeError: {e}")
+        return
+    except ValueError as e:
+        print(f"ValueError: {e}")
         return
 
     if args.print:

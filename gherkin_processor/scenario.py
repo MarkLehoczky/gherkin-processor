@@ -2,10 +2,18 @@
 
 from dataclasses import dataclass
 from re import findall, split
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, cast
 
 
 def build_table(table: Dict[str, List[str]]) -> str:
+    """Build table into text format.
+
+    Args:
+        table (Dict[str, List[str]]): Table of a step or scenarios.
+
+    Returns:
+        str: Text formatted table.
+    """
     column_widths = {h: max(len(h), *(len(row) for row in table[h])) for h in table}
     header_row = "| " + " | ".join(f"{h:{column_widths[h]}}" for h in table) + " |"
     rows = []
@@ -17,11 +25,19 @@ def build_table(table: Dict[str, List[str]]) -> str:
 
 
 def build_steps(steps: List[Dict[str, Dict[str, List[str]] | str]]) -> str:
+    """Build steps into text format.
+
+    Args:
+        steps (List[Dict[str, Dict[str, List[str]]  |  str]]): Steps of a scenario.
+
+    Returns:
+        str: Text formatted steps.
+    """
     step_lines = []
     for step in steps:
         step_lines.append(f"{step['step']} {step['description']}")
         if "table" in step:
-            step_lines.append(build_table(step["table"]))
+            step_lines.append(build_table(cast(dict[str, list[str]], step["table"])))
         if "docstring" in step:
             step_lines.append(f'"""{step.get("docstring-language", "")}\n{step["docstring"]}\n"""')
     return "\n".join(step_lines)
@@ -58,14 +74,24 @@ class Scenario:
         self.__process(scenario_text)
 
     def is_template(self) -> bool:
+        """Determine whether the scenario is a template or not.
+
+        Returns:
+            bool: True if the scenario is a template, otherwise False.
+        """
         return self.template_table is not None
 
     def __str__(self) -> str:
+        """Convert the scenario into text format.
+
+        Returns:
+            str: Scenario in text format.
+        """
         text = "\n".join("@" + t for t in self.tags) + "\n"
         text += ("Scenario Template: " if self.is_template() else "Scenario: ") + self.name + "\n"
         text += build_steps(self.steps)
         if self.is_template():
-            text += "\nScenarios:\n" + build_table(self.template_table)
+            text += "\nScenarios:\n" + build_table(cast(dict[str, list[str]], self.template_table))
         return text
 
     def __process(self, scenario_text: str) -> None:
