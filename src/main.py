@@ -1,3 +1,5 @@
+"""Main module."""
+
 import os
 
 try:
@@ -11,6 +13,7 @@ import argparse
 
 
 def main() -> None:
+    """Main method."""
     parser = argparse.ArgumentParser(description="Gherkin Scenario processor")
     parser.add_argument("-i", "--input", type=str, required=True, help="Input file to process")
     parser.add_argument(
@@ -34,7 +37,7 @@ def main() -> None:
         directory, name = os.path.split(path)
         name, extension = os.path.splitext(name)
         scenario: Scenario = load(path, args.validate)
-    except Exception as e:
+    except IOError | ValueError | TypeError as e:
         print(f"Error: {e}")
         return
 

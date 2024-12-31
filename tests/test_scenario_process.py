@@ -1,9 +1,6 @@
 """Test file."""
 
-try:
-    from gherkin_processor.utils import scenario
-except ImportError:
-    from src.utils import scenario
+from src.utils import scenario
 from tests.templates.scenario_parts import (
     CODE_DOCSTRING,
     DEFAULT_SCENARIO,

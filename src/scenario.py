@@ -61,8 +61,8 @@ class Scenario:
         return self.template_table is not None
 
     def __str__(self) -> str:
-        text = "\n".join(f"@{t}" for t in self.tags)
-        text += f"\n{"Scenario Template" if self.is_template() else "Scenario"}: {self.name}"
+        text = "\n".join(f"@{t}" for t in self.tags) + "\n"
+        text += "Scenario Template" if self.is_template() else "Scenario" + ": " + self.name
         text += "\n" + build_steps(self.steps)
         if self.is_template():
             text += f"\n{"Scenarios"}:\n{build_table(self.template_table)}"
