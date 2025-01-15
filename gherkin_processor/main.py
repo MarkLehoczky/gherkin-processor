@@ -2,6 +2,7 @@
 
 import argparse
 import os
+import sys
 
 from gherkin_processor.scenario import Scenario
 from gherkin_processor.utils.scenario import load, save, save_as_json
@@ -24,7 +25,7 @@ def main() -> None:
         name, extension = os.path.splitext(name)
         scenario: Scenario = load(path, args.validate)
     except (IOError, TypeError, ValueError) as e:
-        print(e)
+        print(e, file=sys.stderr)
         return
 
     if args.print:
