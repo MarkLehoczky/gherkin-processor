@@ -1,13 +1,11 @@
 # Code Linting
 pylint==3.3.2
 mypy==1.13.0
-pyflakes==3.2.0
 
 # Code Metrics
 radon==6.0.1
 
 # Code Format
-black==24.10.0
 pycodestyle==2.12.1
 pydocstyle==6.3.0
 
