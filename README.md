@@ -48,23 +48,13 @@ cd gherkin-processor
 pip install .
 ```
 
-Optional for Git commits:
-
-```sh
-# 4. Install requirements (including pre-commit)
-pip install -r requirements.txt
-
-# 5. Install pre-commit hooks
-pre-commit install
-```
-
 ### Download from Releases
 
 1. Go to the [Releases](https://github.com/MarkLehoczky/gherkin-processor/releases) page.
 2. Download the latest release.
 3. Extract the downloaded file.
 4. Navigate to the extracted directory.
-5. Install the package by clicking on the "install.bat" file
+5. Install the package by clicking on the "[Install.bat](./Install.bat)" file
 
 ## Usage
 
@@ -117,7 +107,7 @@ This project is licensed under [MIT License](LICENSE).
 
 [license-badge]: https://img.shields.io/github/license/marklehoczky/gherkin-processor?style=for-the-badge&color=success
 [release-badge]: https://img.shields.io/github/v/release/marklehoczky/gherkin-processor?include_prereleases&sort=date&display_name=tag&style=for-the-badge&color=success
-[build-badge]:   https://img.shields.io/github/actions/workflow/status/marklehoczky/gherkin-processor/ci.yml?style=for-the-badge
+[build-badge]:   https://img.shields.io/github/actions/workflow/status/marklehoczky/gherkin-processor/ci_main.yml?style=for-the-badge
 [issue-badge]:  https://img.shields.io/github/issues/marklehoczky/gherkin-processor?style=for-the-badge
 [python-badge]:  https://img.shields.io/badge/Python-3.10_%7C_latest-blue?style=for-the-badge
 [os-badge]:  https://img.shields.io/badge/OS-Windows_%7C_Linux_%7C_MacOS-blue?style=for-the-badge
