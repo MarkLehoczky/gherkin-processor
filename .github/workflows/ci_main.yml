@@ -1,16 +1,10 @@
 name: Main CI Workflow
 
 on:
-  pull_request:
-    types:
-    - closed
+  push:
     branches: [$default-branch]
 
-
 jobs:
-  if_merged:
-    if: github.event.pull_request.merged == true
-    
     Test:
       strategy:
         matrix:
