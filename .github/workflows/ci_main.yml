@@ -2,14 +2,13 @@ name: Main CI Workflow
 
 on:
   push:
-    branches:
-      - main
+    branches: [$default-branch]
 
 jobs:
   Test:
     strategy:
       matrix:
-        task: ["test"]
+        task: [""]
     name: 
     uses: ./.github/workflows/complete_test_suite.yml
 
