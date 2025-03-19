@@ -42,25 +42,6 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}
         run: mypy --strict --ignore-missing-imports gherkin_processor/
 
-  format-check:
-    name: Format Check
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out the repository
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-
-      - name: Install required packages
-        run: python -m pip install pyflakes==3.2.0
-
-      - name: Check code quality
-        env:
-          PYTHONPATH: ${{ github.workspace }}
-        run: pyflakes gherkin_processor/
-
 
   code-metrics:
     name: Code Metrics
@@ -76,9 +57,14 @@ jobs:
       - name: Install required packages
         run: python -m pip install radon==6.0.1
 
-      - name: Check cyclomatic complexity and maintainability index
+      - name: Check cyclomatic complexity
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
-          radon cc --min B gherkin_processor/
-          radon mi --min B gherkin_processor/
+          radon cc --min B gherkin_processor
+
+      - name: Check maintainability index
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          radon mi --min B gherkin_processor

@@ -1,51 +1,60 @@
 repos:
   - repo: local
     hooks:
+
+      # Code functionality check
+
+      - id: pytest
+        name: pytest
+        entry: pytest
+        language: system
+        args: ["--cov", "--cov-fail-under=90", "tests/"]
+        types: [python]
+
+
+      # Code security check
+
+      - id: bandit
+        name: bandit
+        entry: bandit
+        language: system
+        args: ["--recursive", "gherkin_processor/"]
+        types: [python]
+
+
       # Code Linting check
+
       - id: pylint
         name: pylint
         entry: pylint
         language: system
-        args: ["--max-line-length=160", "--fail-under=9.85", "gherkin_processor/"]
+        args: ["--max-line-length=160", "--fail-under=9.90", "gherkin_processor/"]
         types: [python]
 
       - id: mypy
         name: mypy
         entry: mypy
         language: system
-        args: ["--strict", "--ignore-missing-imports", "gherkin_processor/"]
-        types: [python]
-
-      - id: pyflakes
-        name: pyflakes
-        entry: pyflakes
-        language: system
-        args: ["gherkin_processor/"]
+        args: ["--strict", "gherkin_processor/"]
         types: [python]
 
       # Code Metrics check
+
       - id: radon-cc
         name: radon cc
         entry: radon cc
         language: system
-        args: ["--min", "B", "gherkin_processor/"]
+        args: ["gherkin_processor/"]
         types: [python]
 
       - id: radon-mi
         name: radon mi
         entry: radon mi
         language: system
-        args: ["--min", "B", "gherkin_processor/"]
+        args: ["gherkin_processor/"]
         types: [python]
 
       # Code Format check
-      - id: black
-        name: black
-        entry: black
-        language: system
-        args: ["--check", "--line-length=160", "gherkin_processor/"]
-        types: [python]
-
       - id: pycodestyle
         name: pycodestyle
         entry: pycodestyle
@@ -58,20 +67,4 @@ repos:
         entry: pydocstyle
         language: system
         args: ["gherkin_processor/"]
-        types: [python]
-
-      # Code security check
-      - id: bandit
-        name: bandit
-        entry: bandit
-        language: system
-        args: ["--recursive", "gherkin_processor/"]
-        types: [python]
-
-      # Code functionality check
-      - id: pytest
-        name: pytest
-        entry: pytest
-        language: system
-        args: ["--cov", "--cov-fail-under=80", "tests/"]
         types: [python]

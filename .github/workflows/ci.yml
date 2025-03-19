@@ -23,13 +23,13 @@ jobs:
   Quality:
     strategy:
       matrix:
-        task: [""]
+        task: [Functionality, Security]
     name: Code Quality
     uses: ./.github/workflows/quality.yml
 
   Format:
     strategy:
       matrix:
-        task: [""]
+        task: [Functionality, Security]
     name: Code Format
     uses: ./.github/workflows/format.yml

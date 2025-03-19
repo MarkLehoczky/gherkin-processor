@@ -31,6 +31,10 @@
 
 You can install the **Gherkin Processor** package by cloning the repository or downloading from the releases.
 
+> Requirements:
+> 
+> - 
+
 ### Clone the Repository
 
 ```sh
@@ -40,8 +44,18 @@ git clone https://github.com/MarkLehoczky/gherkin-processor.git
 # 2. Navigate to the cloned directory
 cd gherkin-processor
 
-# Install the package via 'pip'
+# 3. Install the package via 'pip'
 pip install .
+```
+
+Optional for Git commits:
+
+```sh
+# 4. Install requirements (including pre-commit)
+pip install -r requirements.txt
+
+# 5. Install pre-commit hooks
+pre-commit install
 ```
 
 ### Download from Releases
@@ -50,11 +64,7 @@ pip install .
 2. Download the latest release.
 3. Extract the downloaded file.
 4. Navigate to the extracted directory.
-5. Install the package with the following command:
-
-```sh
-pip install .
-```
+5. Install the package by clicking on the "install.bat" file
 
 ## Usage
 
