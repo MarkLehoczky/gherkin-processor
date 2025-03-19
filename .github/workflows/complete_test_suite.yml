@@ -22,7 +22,7 @@ jobs:
       - name: Run tests
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: pytest --cov --cov-fail-under=80 tests/
+        run: pytest --cov --cov-fail-under=90 tests/
 
   windows-latest-test:
     name: Test - Windows (python latest)
@@ -42,7 +42,7 @@ jobs:
       - name: Run tests
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: pytest --cov --cov-fail-under=80 tests/
+        run: pytest --cov --cov-fail-under=90 tests/
         
   linux-minimum-test:
     name: Test - Linux (python 3.10)
@@ -62,7 +62,7 @@ jobs:
       - name: Run tests
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: pytest --cov --cov-fail-under=80 tests/
+        run: pytest --cov --cov-fail-under=90 tests/
 
   linux-latest-test:
     name: Test - Linux (python latest)
@@ -82,7 +82,7 @@ jobs:
       - name: Run tests
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: pytest --cov --cov-fail-under=80 tests/
+        run: pytest --cov --cov-fail-under=90 tests/
         
   macos-minimum-test:
     name: Test - MacOS (python 3.10)
@@ -102,7 +102,7 @@ jobs:
       - name: Run tests
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: pytest --cov --cov-fail-under=80 tests/
+        run: pytest --cov --cov-fail-under=90 tests/
 
   macos-latest-test:
     name: Test - MacOS (python latest)
@@ -122,4 +122,4 @@ jobs:
       - name: Run tests
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: pytest --cov --cov-fail-under=80 tests/
+        run: pytest --cov --cov-fail-under=90 tests/

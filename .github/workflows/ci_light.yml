@@ -2,8 +2,7 @@ name: Light CI Workflow
 
 on:
   push:
-    branches:
-      - "*"
+    branches-ignore: [$default-branch]
 
 jobs:
   Test:
