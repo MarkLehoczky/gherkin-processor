@@ -1,4 +1,4 @@
-name: Core Functionality
+name: Complete Test Suite
 
 on:
   workflow_call:

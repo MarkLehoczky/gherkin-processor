@@ -13,16 +13,6 @@
     "autoDocstring.quoteStyle": "\"\"\"",
     "autoDocstring.startOnNewLine": false,
 
-    // https://marketplace.visualstudio.com/items?itemName=mikoz.autoflake-extension
-    "autoflake-extension.check": true,
-    "autoflake-extension.expand-star-imports": true,
-    "autoflake-extension.remove-all-unused-imports": true,
-
-    // https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter
-    "black-formatter.args": [
-        "--line-length=160"
-    ],
-
     // https://marketplace.visualstudio.com/items?itemName=ms-python.mypy-type-checker
     "mypy-type-checker.args": [
         "--strict",
@@ -31,7 +21,7 @@
 
     // https://marketplace.visualstudio.com/items?itemName=ms-python.pylint
     "pylint.args": [
-        "--max-line-length=160",
+        "--max-line-length=150",
         "gherkin_processor/"
     ],
     "pylint.enabled": true,
@@ -40,8 +30,7 @@
     "python.testing.autoTestDiscoverOnSaveEnabled": true,
     "python.testing.pytestArgs": [
         "--cov",
-        "--cov-fail-under=80",
-        "-vv",
+        "--cov-fail-under=90",
         "tests/"
     ],
     "python.testing.pytestEnabled": true,
@@ -54,7 +43,6 @@
         "editor.codeActionsOnSave": {
             "source.organizeImports": "explicit"
         },
-        "editor.defaultFormatter": "ms-python.black-formatter",
         "editor.formatOnSave": true
     },
 

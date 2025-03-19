@@ -1,11 +1,11 @@
-name: Code Quality
+name: Code Quality Analysis
 
 on:
   workflow_call:
 
 jobs:
   lint-check:
-    name: Lint Check
+    name: Linting Analysis
     runs-on: ubuntu-latest
 
     steps:
@@ -14,6 +14,8 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
       - name: Install required packages
         run: python -m pip install pylint==3.3.2
@@ -21,10 +23,10 @@ jobs:
       - name: Check code linting
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: pylint --max-line-length=160 --fail-under=9.85 gherkin_processor/
+        run: python -m pylint --max-line-length=150 --fail-under=9.90 gherkin_processor/
 
   type-check:
-    name: Type Check
+    name: Type Hint Analysis
     runs-on: ubuntu-latest
 
     steps:
@@ -33,6 +35,8 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
       - name: Install required packages
         run: python -m pip install mypy==1.13.0
@@ -40,11 +44,11 @@ jobs:
       - name: Check code type hints
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: mypy --strict --ignore-missing-imports gherkin_processor/
+        run: python -m mypy --strict --ignore-missing-imports gherkin_processor/
 
 
   code-metrics:
-    name: Code Metrics
+    name: Code Metrics Analysis
     runs-on: ubuntu-latest
 
     steps:
@@ -53,6 +57,8 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
       - name: Install required packages
         run: python -m pip install radon==6.0.1
@@ -61,10 +67,10 @@ jobs:
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
-          radon cc --min B gherkin_processor
+          python -m radon cc gherkin_processor
 
       - name: Check maintainability index
         env:
           PYTHONPATH: ${{ github.workspace }}
         run: |
-          radon mi --min B gherkin_processor
+          python -m radon mi gherkin_processor

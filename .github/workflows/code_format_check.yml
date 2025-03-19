@@ -1,4 +1,4 @@
-name: Code Format
+name: Code Format Check
 
 on:
   workflow_call:
@@ -14,6 +14,8 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
       - name: Install required packages
         run: python -m pip install pycodestyle==2.12.1
@@ -21,7 +23,7 @@ jobs:
       - name: Check code style
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: pycodestyle --max-line-length=160 gherkin_processor/
+        run: python -m pycodestyle --max-line-length=150 gherkin_processor/
 
   documentation-style:
     name: Documentation Style Check
@@ -33,6 +35,8 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
       
       - name: Install required packages
         run: python -m pip install pydocstyle==6.3.0
@@ -40,5 +44,5 @@ jobs:
       - name: Check documentation style
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: pydocstyle gherkin_processor/
+        run: python -m pydocstyle gherkin_processor/
       

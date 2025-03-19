@@ -1,0 +1,37 @@
+name: Main CI Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Test:
+    strategy:
+      matrix:
+        task: ["test"]
+    name: 
+    uses: ./.github/workflows/complete_test_suite.yml
+
+  Security:
+    strategy:
+      matrix:
+        task: [""]
+    name: Project Security Scan
+    uses: ./.github/workflows/project_security_scan.yml
+
+  Quality:
+    strategy:
+      matrix:
+        task: [""]
+    name: Code Quality Analysis
+    needs: [Test, Security]
+    uses: ./.github/workflows/code_quality_analysis.yml
+
+  Format:
+    strategy:
+      matrix:
+        task: [""]
+    name: Code Format Check
+    needs: [Test, Security]
+    uses: ./.github/workflows/code_format_check.yml

@@ -1,8 +1,6 @@
 {
     "recommendations": [
         "njpwerner.autodocstring",
-        "mikoz.autoflake-extension",
-        "ms-python.black-formatter",
         "ms-python.mypy-type-checker",
         "ms-python.vscode-pylance",
         "ms-python.pylint",

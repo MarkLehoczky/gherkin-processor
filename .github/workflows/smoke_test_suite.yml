@@ -1,0 +1,25 @@
+name: Complete Test Suite
+
+on:
+  workflow_call:
+
+jobs:
+  linux-latest-test:
+    name: Smoke Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up latest Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install required packages
+        run: python -m pip install pytest==8.3.4 pytest-cov==6.0.0
+      - name: Run tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python -m pytest --cov --cov-fail-under=35 tests/smoke/

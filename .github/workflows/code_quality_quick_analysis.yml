@@ -1,0 +1,47 @@
+name: Code Quality Analysis
+
+on:
+  workflow_call:
+
+jobs:
+  lint-check:
+    name: Linting Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install required packages
+        run: python -m pip install pylint==3.3.2
+
+      - name: Check code linting
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python -m pylint --max-line-length=150 --fail-under=9.90 gherkin_processor/
+
+  type-check:
+    name: Type Hint Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install required packages
+        run: python -m pip install mypy==1.13.0
+
+      - name: Check code type hints
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python -m mypy --strict --ignore-missing-imports gherkin_processor/

@@ -1,0 +1,29 @@
+name: Light CI Workflow
+
+on:
+  push:
+    branches:
+      - "*"
+
+jobs:
+  Test:
+    strategy:
+      matrix:
+        task: [""]
+    name: Smoke Test Suite
+    uses: ./.github/workflows/smoke_test_suite.yml
+
+  Security:
+    strategy:
+      matrix:
+        task: [""]
+    name: Project Security Scan
+    uses: ./.github/workflows/project_security_scan.yml
+
+  Quality:
+    strategy:
+      matrix:
+        task: [""]
+    name: Code Quality Quick Analysis
+    needs: [Test, Security]
+    uses: ./.github/workflows/code_quality_quick_analysis.yml
