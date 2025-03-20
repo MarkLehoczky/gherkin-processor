@@ -355,7 +355,7 @@ def __but_step(status: str, pos: int, line: str, outline: bool) -> Tuple[str, st
         s = "BUT step document string"
         d = '"""'
     if line.startswith("```"):
-        if line.removeprefix("```") and not line.removeprefix('"""').isalpha():
+        if line.removeprefix("```") and not line.removeprefix("```").isalpha():
             m = f"Document string opening cannot have non-alpha characters after ``` in '{status}' at line [{pos}]: \"{line}\"."
         s = "BUT step document string"
         d = "```"
