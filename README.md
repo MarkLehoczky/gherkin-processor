@@ -32,8 +32,7 @@
 You can install the **Gherkin Processor** package by cloning the repository or downloading from the releases.
 
 > Requirements:
-> 
-> - 
+> - Python 3.10+ version with pip installed
 
 ### Clone the Repository
 
@@ -46,6 +45,9 @@ cd gherkin-processor
 
 # 3. Install the package via 'pip'
 pip install .
+
+# (Optional) 4. Set up pre-commit git hook
+cp hooks/pre-commit .git/hooks/pre-commit
 ```
 
 ### Download from Releases
