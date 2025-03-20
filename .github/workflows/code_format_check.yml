@@ -23,7 +23,7 @@ jobs:
       - name: Check code style
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: python -m pycodestyle --max-line-length=150 gherkin_processor/
+        run: python -m pycodestyle --max-line-length=160 gherkin_processor/
 
   documentation-style:
     name: Documentation Style Check

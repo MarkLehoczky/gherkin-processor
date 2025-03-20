@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Run each check and track failures
+failures=0
+
+run_check() {
+    echo "Running $1..."
+    if ! "$@"; then
+        echo "$1 failed!"
+        failures=$((failures + 1))
+    fi
+}
+
+# Code functionality check
+run_check pytest --cov --cov-fail-under=90 tests/
+
+# Code security check
+run_check bandit --recursive gherkin_processor/
+
+# Code Linting check
+run_check pylint --max-line-length=160 --fail-under=9.90 gherkin_processor/
+run_check mypy --strict gherkin_processor/
+
+# Code Metrics check
+run_check radon cc gherkin_processor/
+run_check radon mi gherkin_processor/
+
+# Code Format check
+run_check pycodestyle --max-line-length=160 gherkin_processor/
+run_check pydocstyle gherkin_processor/
+
+if [ "$failures" -ne 0 ]; then
+    echo "$failures checks failed! Pre-commit hook failed."
+    exit 1
+fi
+
+echo "All checks passed!"
