@@ -21,7 +21,7 @@ run_check() {
 }
 
 # Code functionality check
-run_check "pytest" pytest --cov --cov-fail-under=90 tests/
+run_check "pytest" pytest --cov --cov-fail-under=90 tests/**
 
 # Code security check
 run_check "bandit" bandit --recursive gherkin_processor/
