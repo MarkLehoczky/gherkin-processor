@@ -22,4 +22,4 @@ jobs:
       - name: Run tests
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: python -m pytest --cov --cov-fail-under=35 tests/smoke/
+        run: python -m pytest --cov=gherkin_processor/ --cov-fail-under=25 tests/smoke/

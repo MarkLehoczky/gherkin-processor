@@ -1,13 +1,16 @@
 {
     "recommendations": [
-        "njpwerner.autodocstring",
+        "ms-python.debugpy",
+        "ms-python.isort",
         "ms-python.mypy-type-checker",
-        "ms-python.vscode-pylance",
         "ms-python.pylint",
         "ms-python.python",
-        "ms-python.debugpy",
-        "rodolphebarbanneau.python-docstring-highlighter",
-        "littlefoxteam.vscode-python-test-adapter",
-        "njqdev.vscode-python-typehint"
+        "ms-python.vscode-pylance",
+        "ms-toolsai.jupyter",
+        "ms-toolsai.jupyter-keymap",
+        "ms-toolsai.jupyter-renderers",
+        "ms-toolsai.vscode-jupyter-cell-tags",
+        "ms-toolsai.vscode-jupyter-slideshow",
+        "njpwerner.autodocstring"
     ]
 }
