@@ -4,7 +4,7 @@ overall_status=0
 
 echo ""
 echo "=================================================="
-echo "           GIT PRE-COMMIT HOOK STARTED            "
+echo "             PRE-COMMIT HOOK STARTED              "
 echo "--------------------------------------------------"
 
 run_check() {
@@ -37,7 +37,7 @@ run_check "Documentation Style Check" pydocstyle gherkin_processor/
 
 if [ $overall_status -ne 0 ]; then
   echo "--------------------------------------------------"
-  echo "       ONE OR MORE PRE-COMMIT HOOKS FAILED        "
+  echo "        ONE OR MORE PRE-COMMIT HOOK FAILED        "
   echo "=================================================="
   echo.
   exit $overall_status
