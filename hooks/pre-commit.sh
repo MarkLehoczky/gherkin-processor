@@ -4,7 +4,7 @@
 # Initialize overall status to success.
 overall_status=0
 
-echo.
+echo ""
 echo "=================================================="
 echo "           GIT PRE-COMMIT HOOK STARTED            "
 echo "--------------------------------------------------"
@@ -60,5 +60,5 @@ fi
 echo "--------------------------------------------------"
 echo "     ALL PRE-COMMIT HOOK PASSED SUCCESSFULLY      "
 echo "=================================================="
-echo.
+echo ""
 exit 0
