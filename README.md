@@ -57,8 +57,8 @@ cp hooks/pre-commit.sh .git/hooks/pre-commit
 3. Extract the downloaded file.
 4. Navigate to the extracted directory.
 5. Install the package by clicking on the install file
-  - *Windows file*: "[Install.bat](./Install.bat)"
-  - *Linux file*: "[Install.sh](./Install.sh)"
+    - *Windows file*: "[Install.bat](./Install.bat)"
+    - *Linux file*: "[Install.sh](./Install.sh)"
 
 ## Usage
 
