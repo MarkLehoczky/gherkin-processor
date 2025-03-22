@@ -47,7 +47,7 @@ cd gherkin-processor
 pip install .
 
 # (Optional) 4. Set up pre-commit git hook
-cp hooks/pre-commit .git/hooks/pre-commit
+cp hooks/pre-commit.sh .git/hooks/pre-commit
 ```
 
 ### Download from Releases
