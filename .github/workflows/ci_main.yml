@@ -9,7 +9,7 @@ jobs:
       strategy:
         matrix:
           task: [""]
-      name: 
+      name: Complete Test Suite
       uses: ./.github/workflows/complete_test_suite.yml
 
     Security:
