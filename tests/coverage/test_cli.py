@@ -2,8 +2,6 @@
 
 import os
 
-from gherkin_processor.utils import scenario
-
 
 def test_save() -> None:
     os.system("python gherkin_processor/main.py -i tests/data/simple_scenario.feature -s")
