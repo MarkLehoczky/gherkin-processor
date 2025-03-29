@@ -18,9 +18,9 @@ def test_simple_feature_process():
     assert len(feature.scenarios) == 1
 
     scenario = feature.scenarios[0]
+    assert scenario.tags is None
     assert scenario.text == "Making coffee"
     assert scenario.description is None
-    assert scenario.tags == []
     assert len(scenario.steps) == 3
     assert scenario.outline is None
 
@@ -39,7 +39,7 @@ def test_simple_feature_process():
 
 def test_simple_feature_to_string():
     feature = Feature(feature_text)
-    assert feature.to_string() == feature_text
+    assert feature.to_string(indent=2, alternative_step_keyword=None) == feature_text
 
 def test_simple_feature_to_dict():
     feature = Feature(feature_text)

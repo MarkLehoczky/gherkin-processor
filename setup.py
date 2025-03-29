@@ -1,6 +1,5 @@
 from setuptools import setup
 
-
 setup(
     name="gherkin-processor",
     version="0.0.2",
@@ -30,6 +29,6 @@ setup(
         ],
     },
     license="MIT License",
-    package_dir={},
+    package_dir= {},
     python_requires=">=3.10",
 )

@@ -1,32 +1,69 @@
-"""Background class for processing Gherkin feature background component into python class."""
+"""Gherkin Background Processor Module.
+
+This module provides functionality to process Gherkin background content into a Python class representation.
+"""
+
+from typing import Any, Dict, List
 
 from gherkin_processor.step import Step
 
 
 class Background:
-    """Process Gherkin feature background component into python class.
+    """Represent a Gherkin background with its components.
 
     Attributes:
-        description (str, optional): Free-form text of the background for more description.
-        steps (list[Step]): Ordered list of steps that define the actions within the background.
+        description (str): The description of the Gherkin background (if any).
+        steps (List[Step]): The list of steps present in the Gherkin background (if any).
     """
 
     description: str | None
-    steps: list[Step]
+    steps: List[Step] | None
 
-    def __init__(self, background_text: str = None, index: int = 0, validate: bool = False) -> None:
-        self.temp = {
-            "background_text": background_text,
-            "index": index,
-            "validate": validate
+    def __init__(self) -> None:
+        """Initialize a Gherkin background with default empty components."""
+        self.description = None
+        self.steps = None
+
+    def __str__(self) -> str:
+        """Return string representation of the Gherkin background."""
+        return self.to_string()
+
+    def to_string(self) -> str:
+        """Convert the Gherkin background into a formatted string representation.
+
+        Returns:
+            str: A string representation of the Gherkin background.
+        """
+        lines: List[str] = []
+        if self.description is not None:
+            lines.append(self.description)
+        if self.steps is not None:
+            lines.extend(str(step) for step in self.steps)
+        return "\n".join(lines)
+
+    def to_dictionary(self) -> Dict[str, Any]:
+        """Convert the Gherkin background into a dictionary representation.
+
+        Returns:
+            Dict[str, Any]: Dictionary containing the Gherkin background components.
+        """
+        return {
+            "description": self.description,
+            "steps": self.steps
         }
 
-    def to_dict(self, include_empty_values: bool = False) -> dict:
-        self.temp["include_empty_values"] = include_empty_values
-        return self.temp
+    def process(self, text: str, validate: bool) -> bool:
+        """Process Gherkin background content and update the object accordingly.
 
-    def to_string(self, initial_indent: int = 0, indent: int = 0, alternative_step_keyword: str | None = None) -> str:
-        self.temp["initial_indent"] = initial_indent
-        self.temp["indent"] = indent
-        self.temp["alternative_step_keyword"] = alternative_step_keyword
-        return str(self.temp)
+        Args:
+            text (str): The Gherkin background content to be processed.
+            validate (bool): If True, performs syntax validation.
+
+        Returns:
+            bool: True if processing is successful.
+
+        Raises:
+            TypeError: If `text` is not a string.
+            ValueError: If `validate` is True and the Gherkin background has issues.
+        """
+        return True
