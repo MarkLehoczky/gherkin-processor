@@ -237,9 +237,9 @@ class Scenario:
         allowed_positions = ALLOWED_SCENARIO_POSITIONS.get(keyword)
         if validate and allowed_positions is None:
             if keyword.endswith("TABLE"):
-                raise ValueError(f"Table component cannot be after '{keyword.removesuffix(" TABLE")}' at line [{num}]: {text}")
+                raise ValueError(f"Table component cannot be after '{keyword.removesuffix(' TABLE')}' at line [{num}]: {text}")
             if keyword.endswith("DOC-STRING"):
-                raise ValueError(f"Doc-string component cannot be after '{keyword.removesuffix(" DOC-STRING")}' at line [{num}]: {text}")
+                raise ValueError(f"Doc-string component cannot be after '{keyword.removesuffix(' DOC-STRING')}' at line [{num}]: {text}")
             raise ValueError(f"Could not resolve current status '{keyword}' as a valid possibility at line [{num}]: {text}")
         if validate and allowed_positions is not None and status not in allowed_positions:
             raise ValueError(f"Keyword '{keyword}' cannot be after '{status}' at line [{num}]: {text}")
