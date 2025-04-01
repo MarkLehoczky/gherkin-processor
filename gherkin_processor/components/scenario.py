@@ -255,10 +255,10 @@ class Scenario:
                     if any(lines[start:end]):
                         self.steps.append(Step())
                         if lines[start].strip().startswith("And "):
-                            fixed_step = lines[start].replace("And", previous.capitalize(), count=1)
+                            fixed_step = lines[start].replace("And", previous.capitalize(), 1)
                             is_valid = self.steps[-1].process(("\n" * start) + fixed_step + "\n" + "\n".join(lines[start+1:end]), validate)
                         elif lines[start].strip().startswith("* "):
-                            fixed_step = lines[start].replace("*", previous.capitalize(), count=1)
+                            fixed_step = lines[start].replace("*", previous.capitalize(), 1)
                             is_valid = self.steps[-1].process(("\n" * start) + fixed_step + "\n" + "\n".join(lines[start+1:end]), validate)
                         else:
                             is_valid = self.steps[-1].process(("\n" * start) + "\n".join(lines[start:end]), validate)
@@ -277,10 +277,10 @@ class Scenario:
                 if any(lines[start:]):
                     self.steps.append(Step())
                     if lines[start].strip().startswith("And "):
-                        fixed_step = lines[start].replace("And", step.capitalize(), count=1)
+                        fixed_step = lines[start].replace("And", step.capitalize(), 1)
                         is_valid = self.steps[-1].process(("\n" * start) + fixed_step + "\n" + "\n".join(lines[start+1:]), validate)
                     elif lines[start].strip().startswith("* "):
-                        fixed_step = lines[start].replace("*", step.capitalize(), count=1)
+                        fixed_step = lines[start].replace("*", step.capitalize(), 1)
                         is_valid = self.steps[-1].process(("\n" * start) + fixed_step + "\n" + "\n".join(lines[start+1:]), validate)
                     else:
                         is_valid = self.steps[-1].process(("\n" * start) + "\n".join(lines[start:]), validate)
