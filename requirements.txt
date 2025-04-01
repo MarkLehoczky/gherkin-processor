@@ -1,17 +1,18 @@
-# Code Linting
-pylint==3.3.2
-mypy==1.13.0
+# Pre-commit Hook
+pre-commit==4.2.0
 
-# Code Metrics
-radon==6.0.1
+# Test Suite
+pytest==8.3.5
+pytest-cov==6.1.0
 
-# Code Format
-pycodestyle==2.12.1
+# Project Security Scan
+bandit==1.8.3
+
+# Code Quality Analysis
+pylint==3.3.6
+mypy==1.15.0
+xenon==0.9.3
+
+# Code Format Check
+pycodestyle==2.13.0
 pydocstyle==6.3.0
-
-# Code security
-bandit==1.8.0
-
-# Code functionality
-pytest==8.3.4
-pytest-cov==6.0.0

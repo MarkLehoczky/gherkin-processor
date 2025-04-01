@@ -3,15 +3,17 @@
 This module provides functionality to process Gherkin rule content into a Python class representation.
 """
 
+from dataclasses import dataclass
 from typing import Any, Dict, List
 
 
+@dataclass
 class Rule:
     """Represent a Gherkin rule with its components.
 
     Attributes:
-        name (str): The name of the Gherkin rule (if any).
-        description (str): The description of the Gherkin rule (if any).
+        name (str | None): The name of the Gherkin rule (if any).
+        description (str | None): The description of the Gherkin rule (if any).
     """
 
     name: str | None
@@ -64,4 +66,29 @@ class Rule:
             TypeError: If `text` is not a string.
             ValueError: If `validate` is True and the Gherkin rule has issues.
         """
-        return True
+        if not isinstance(text, str):
+            raise TypeError("Variable 'text' is not string type")
+
+        valid_syntax: bool = True
+        status = "<BEGINNING>"
+        lines: List[str] = text.splitlines()
+        description: List[str] = []
+
+        for num, line in enumerate(lines, 1):
+            stripped_line = line.strip()
+
+            if stripped_line.startswith("Rule:"):
+                self.name = stripped_line.removeprefix("Rule:").lstrip()
+                if validate and not self.name:
+                    raise ValueError(f"Keyword 'RULE' must be followed with text at line [{num}]: {line}")
+                valid_syntax = bool(self.name)
+                status = "RULE"
+
+            elif line:
+                if validate and status == "<BEGINNING>":
+                    raise ValueError(f"Description text cannot be before 'RULE' keyword at line [{num}]: {line}")
+                valid_syntax &= status != "<BEGINNING>"
+                description.append(line)
+
+        self.description = "\n".join(description) if description else None
+        return valid_syntax

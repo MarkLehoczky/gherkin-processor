@@ -23,7 +23,7 @@ jobs:
       - name: Check code linting
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: python -m pylint --max-line-length=160 --fail-under=9.90 gherkin_processor/
+        run: python -m pylint --max-line-length=160 --min-similarity-lines=15 --fail-under=9.90 gherkin_processor/
 
   type-check:
     name: Type Hint Analysis

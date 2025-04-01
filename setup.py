@@ -1,8 +1,11 @@
+"""Setup module for pip installation."""
+
+
 from setuptools import setup
 
 setup(
     name="gherkin-processor",
-    version="0.0.2",
+    version="0.1.0",
     description="Gherkin Processor is a Python package that processes Gherkin files into Python dataclasses. It provides utilities for validating, processing, and saving Gherkin scenarios in both text and JSON formats.",
     long_description=open("README.md", "r").read(),
     long_description_content_type="text/markdown",

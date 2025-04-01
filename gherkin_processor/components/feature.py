@@ -3,15 +3,17 @@
 This module provides functionality to process Gherkin feature content into a Python class representation.
 """
 
+from dataclasses import dataclass
 from typing import Any, Dict, List
 
 
+@dataclass
 class Feature:
     """Represent a Gherkin feature with its components.
 
     Attributes:
-        name (str): The name of the Gherkin feature.
-        description (str): The description of the Gherkin feature (if any).
+        name (str | None): The name of the Gherkin feature.
+        description (str | None): The description of the Gherkin feature (if any).
     """
 
     name: str
@@ -63,4 +65,29 @@ class Feature:
             TypeError: If `text` is not a string.
             ValueError: If `validate` is True and the Gherkin feature has issues.
         """
-        return True
+        if not isinstance(text, str):
+            raise TypeError("Variable 'text' is not string type")
+
+        valid_syntax: bool = True
+        status = "<BEGINNING>"
+        lines: List[str] = text.splitlines()
+        description: List[str] = []
+
+        for num, line in enumerate(lines, 1):
+            stripped_line = line.strip()
+
+            if stripped_line.startswith("Feature:"):
+                self.name = stripped_line.removeprefix("Feature:").lstrip()
+                if validate and not self.name:
+                    raise ValueError(f"Keyword 'FEATURE' must be followed with text at line [{num}]: {line}")
+                valid_syntax = bool(self.name)
+                status = "FEATURE"
+
+            elif line:
+                if status == "<BEGINNING>":
+                    raise ValueError(f"Description text cannot be before 'FEATURE' keyword at line [{num}]: {line}")
+                valid_syntax &= status != "<BEGINNING>"
+                description.append(line)
+
+        self.description = "\n".join(description) if description else None
+        return valid_syntax

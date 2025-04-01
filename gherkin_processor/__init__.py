@@ -1,19 +1,16 @@
 """Init file for module visibility."""
 
-from .background import Background
-from .feature import Feature
 from .gherkin import Gherkin
 from .main import main
-from .rule import Rule
-from .scenario import Scenario
-from .step import Step
+from .utils import is_valid, issue, load, process, save, validate
 
 __all__ = [
-    "Background",
-    "Feature",
     "Gherkin",
+    "is_valid",
+    "issue",
+    "load",
     "main",
-    "Rule",
-    "Scenario",
-    "Step"
+    "process",
+    "save",
+    "validate"
 ]
