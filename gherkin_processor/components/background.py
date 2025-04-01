@@ -141,7 +141,7 @@ class Background:
         num, text = line
         stripped_line = text.strip()
         if validate and stripped_line.startswith(("When", "Then", "But")):
-            raise ValueError(f"Keyword '{stripped_line.split(" ", maxsplit=1)[0].upper()}' cannot be in Background component at line [{num}]: {text}")
+            raise ValueError(f"Keyword '{stripped_line.split(' ', maxsplit=1)[0].upper()}' cannot be in Background component at line [{num}]: {text}")
         if stripped_line.startswith("Given "):
             keyword = stripped_line.split(" ", maxsplit=1)[0].upper()
             return keyword, keyword, self._validate_position(keyword, status, line, validate)
