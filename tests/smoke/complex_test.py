@@ -2,7 +2,7 @@ from gherkin_processor.gherkin import Gherkin
 
 
 def test_complex_process():
-    gherkin = Gherkin("tests\data\complex.feature", True)
+    gherkin = Gherkin("tests/data/complex.feature", True)
 
     assert gherkin.feature.name == "Making breakfast"
     assert gherkin.feature.description == "Describes a morning routine regarding breakfast making of an average person."

@@ -2,7 +2,7 @@ from gherkin_processor.gherkin import Gherkin
 
 
 def test_simple_process():
-    gherkin = Gherkin("tests\data\simple.feature", True)
+    gherkin = Gherkin("tests/data/simple.feature", True)
 
     assert gherkin.feature.name == "Making breakfast"
     assert gherkin.feature.description is None
