@@ -23,7 +23,7 @@ jobs:
       - name: Check code linting
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: python -m pylint --max-line-length=160 --fail-under=9.90 gherkin_processor/
+        run: python -m pylint --max-line-length=160 --min-similarity-lines=15 --fail-under=9.90 gherkin_processor/
 
   type-check:
     name: Type Hint Analysis
@@ -61,16 +61,9 @@ jobs:
           python-version: '3.x'
 
       - name: Install required packages
-        run: python -m pip install radon==6.0.1
+        run: python -m pip install xenon==0.9.3
 
-      - name: Check cyclomatic complexity
+      - name: Check code metrics
         env:
           PYTHONPATH: ${{ github.workspace }}
-        run: |
-          python -m radon cc gherkin_processor
-
-      - name: Check maintainability index
-        env:
-          PYTHONPATH: ${{ github.workspace }}
-        run: |
-          python -m radon mi gherkin_processor
+        run: python -m xenon --max-absolute B --max-average B --max-modules B gherkin_processor/

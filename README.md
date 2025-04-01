@@ -43,11 +43,14 @@ git clone https://github.com/MarkLehoczky/gherkin-processor.git
 # 2. Navigate to the cloned directory
 cd gherkin-processor
 
-# 3. Install the package via 'pip'
+# 3. Install the package
 pip install .
 
-# (Optional) 4. Set up pre-commit git hook
-cp hooks/pre-commit.sh .git/hooks/pre-commit
+# (Optional) 4. Install the necessary python packages for pre-commit hook
+pip install -r requirements.txt
+
+# (Optional) 5. Change the git pre-commit hook to the custom pre-commit configuration
+pre-commit install
 ```
 
 ### Download from Releases

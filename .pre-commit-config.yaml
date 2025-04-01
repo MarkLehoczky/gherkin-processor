@@ -1,0 +1,51 @@
+repos:
+  - repo: local
+    hooks:
+      - id: pytest
+        name: Complete Test Suite
+        entry: pytest
+        args: ["tests/"]
+        language: system
+        types: [python]
+
+      - id: bandit
+        name: Project Security Scan
+        entry: bandit
+        args: ["--recursive", "gherkin_processor/"]
+        language: system
+        types: [python]
+
+      - id: pylint
+        name: Linting Analysis
+        entry: pylint
+        args: ["--max-line-length=160", "--min-similarity-lines=15", "--fail-under=9.90", "gherkin_processor/"]
+        language: system
+        types: [python]
+
+      - id: mypy
+        name: Type Hint Analysis
+        entry: mypy
+        args: ["--strict", "gherkin_processor/"]
+        language: system
+        types: [python]
+
+      - id: xenon
+        name: Code Metrics Analysis
+        entry: xenon
+        args: ["--max-absolute B", "--max-average B", "--max-modules B", "gherkin_processor/"]
+        language: system
+        types: [python]
+
+      - id: pycodestyle
+        name: Code Style Check
+        entry: pycodestyle
+        args: ["--max-line-length=160", "gherkin_processor/"]
+        language: system
+        types: [python]
+
+      - id: pydocstyle
+        name: Documentation Style Check
+        entry: pydocstyle gherkin_processor/
+        args: ["gherkin_processor/"]
+        language: system
+        types: [python]

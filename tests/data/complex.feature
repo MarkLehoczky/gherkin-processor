@@ -8,7 +8,7 @@ Describes a morning routine regarding breakfast making of an average person.
     The default assumption is that every breakfast comes with coffee.
       Given I have coffee grounds
       And I add hot water
-      And I get a cup of coffee
+      * I get a cup of coffee
 
         @european
         @american @canadian
@@ -30,7 +30,6 @@ Describes a morning routine regarding breakfast making of an average person.
           Then the pancake is edible
           But the butter is melted
 
-        @american
         Scenario Outline: Making eggs
         This scenario does not include all the egg making method, only selected ones.
           Given I have fresh eggs
