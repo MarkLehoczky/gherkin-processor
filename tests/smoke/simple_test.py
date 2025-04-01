@@ -1,11 +1,8 @@
 from gherkin_processor.gherkin import Gherkin
 
-text = open("tests/data/simple.feature").read()
 
-
-def test_simple_feature_process():
-    gherkin = Gherkin()
-    gherkin.process(text, True)
+def test_simple_process():
+    gherkin = Gherkin("tests\data\simple.feature", True)
 
     assert gherkin.feature.name == "Making breakfast"
     assert gherkin.feature.description is None

@@ -14,10 +14,10 @@ Describes a morning routine regarding breakfast making of an average person.
         @american @canadian
         Scenario: Making pancake
           Given I have pancake mix prepared the following way:
-          \"\"\"
+          """
             Add ½ cup milk, 1 cup baking mix, 1 tbsp olive oil and 1 egg into a bowl.
             Stir the mix until the texture is consistent.
-          \"\"\"
+          """
           When I cook the prepared pancake mix
           Then I get a cooked pancake
           When I top the pancake with the following ingredients:

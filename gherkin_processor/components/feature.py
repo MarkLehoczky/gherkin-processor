@@ -84,7 +84,7 @@ class Feature:
                 status = "FEATURE"
 
             elif line:
-                if status == "<BEGINNING>":
+                if validate and status == "<BEGINNING>":
                     raise ValueError(f"Description text cannot be before 'FEATURE' keyword at line [{num}]: {line}")
                 valid_syntax &= status != "<BEGINNING>"
                 description.append(line)
