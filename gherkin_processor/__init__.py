@@ -2,7 +2,7 @@
 
 from .gherkin import Gherkin
 from .main import main
-from .utils import is_valid, issue, load, process, save, validate
+from .util import is_valid, issue, load, process, save, validate
 
 __all__ = [
     "Gherkin",

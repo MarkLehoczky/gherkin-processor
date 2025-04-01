@@ -4,7 +4,6 @@ This module provides functionality to process Gherkin syntax content into a Pyth
 """
 
 from dataclasses import dataclass
-from os.path import abspath, exists, isfile
 from typing import Any, Dict, List, Optional, Tuple
 
 from gherkin_processor.components.background import Background
@@ -32,7 +31,7 @@ class Gherkin:
     background: Background
     scenarios: List[Scenario]
 
-    def __init__(self, file_path: Optional[str] = "", validate: bool = True) -> None:
+    def __init__(self, file_path: Optional[str] = None, validate: bool = True) -> None:
         """Initialize a Gherkin document with default empty components."""
         self.file = None
         self.feature = Feature()
@@ -40,9 +39,9 @@ class Gherkin:
         self.background = Background()
         self.scenarios = []
 
-        if file_path is not None and exists(file_path) and isfile(file_path):
-            self.file = abspath(file_path)
-            with open(self.file, "r", encoding="utf-8", errors="backslashreplace") as text:
+        if file_path is not None:
+            with open(file_path, "r", encoding="utf-8", errors="namereplace") as text:
+                self.file = file_path
                 self.process(text.read(), validate)
 
     def __str__(self) -> str:
