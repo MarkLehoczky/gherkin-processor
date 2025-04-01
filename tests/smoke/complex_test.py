@@ -1,11 +1,8 @@
 from gherkin_processor.gherkin import Gherkin
 
-text = open("tests/data/complex.feature").read()
 
-
-def test_complex_feature_process():
-    gherkin = Gherkin()
-    gherkin.process(text, True)
+def test_complex_process():
+    gherkin = Gherkin("tests/data/complex.feature", True)
 
     assert gherkin.feature.name == "Making breakfast"
     assert gherkin.feature.description == "Describes a morning routine regarding breakfast making of an average person."
