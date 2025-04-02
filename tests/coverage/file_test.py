@@ -1,12 +1,13 @@
-from os import remove
 from os.path import exists
 
 from gherkin_processor.gherkin import Gherkin
 from gherkin_processor.util import load, save
-from tests.decorators import empty_output_directory
+from tests.decorators import after, before
+from tests.functions import empty_output_directory
 
 
-@empty_output_directory
+@before ( empty_output_directory )
+@after ( empty_output_directory )
 def test_save():
     gherkin = Gherkin("tests/data/complex.feature", True)
 

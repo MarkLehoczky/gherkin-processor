@@ -1,15 +1,23 @@
 from functools import wraps
-from os import listdir, remove
-from os.path import isfile, join
 
 
-def empty_output_directory(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        output_dir = "tests/data/output"
-        for item in listdir(output_dir):
-            item_path = join(output_dir, item)
-            if isfile(item_path):
-                remove(item_path)
-        return func(*args, **kwargs)
-    return wrapper
+def before(*before_functions):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            for before_function in before_functions:
+                before_function()
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+def after(*after_functions):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            for after_function in after_functions:
+                after_function()
+            return result
+        return wrapper
+    return decorator

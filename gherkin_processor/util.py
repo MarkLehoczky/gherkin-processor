@@ -25,7 +25,7 @@ def process(gherkin_text: str, validate_text: bool = False) -> Gherkin:
     return gherkin
 
 
-def load(file_path: str, validate_text: bool = False) -> Gherkin | None:
+def load(file_path: str, validate_text: bool = False) -> Gherkin:
     """Load a Gherkin file and returns a Gherkin object.
 
     Args:
@@ -37,7 +37,7 @@ def load(file_path: str, validate_text: bool = False) -> Gherkin | None:
     """
     if file_path is not None and exists(file_path) and isfile(file_path):
         return Gherkin(file_path, validate_text)
-    return None
+    return Gherkin()
 
 
 def save(gherkin: Gherkin, file_path: str, mode: str = "GHERKIN", override_existing_file: bool = False) -> bool:
