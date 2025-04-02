@@ -1,0 +1,163 @@
+{
+    "file": "tests/data/complex.feature",
+    "feature": {
+        "name": "Making breakfast",
+        "description": "Describes a morning routine regarding breakfast making of an average person."
+    },
+    "rule": {
+        "name": "Only one breakfast meal should be prepared",
+        "description": "  The morning routine should include breakfast for only one person."
+    },
+    "background": {
+        "description": "    The default assumption is that every breakfast comes with coffee.",
+        "steps": [
+            {
+                "type": "Given",
+                "text": "I have coffee grounds",
+                "table": null,
+                "doc_string": null
+            },
+            {
+                "type": "Given",
+                "text": "I add hot water",
+                "table": null,
+                "doc_string": null
+            },
+            {
+                "type": "Given",
+                "text": "I get a cup of coffee",
+                "table": null,
+                "doc_string": null
+            }
+        ]
+    },
+    "scenarios": [
+        {
+            "tags": [
+                "american",
+                "canadian",
+                "european"
+            ],
+            "name": "Making pancake",
+            "description": null,
+            "steps": [
+                {
+                    "type": "Given",
+                    "text": "I have pancake mix prepared the following way:",
+                    "table": null,
+                    "doc_string": "            Add \u00bd cup milk, 1 cup baking mix, 1 tbsp olive oil and 1 egg into a bowl.\n            Stir the mix until the texture is consistent."
+                },
+                {
+                    "type": "When",
+                    "text": "I cook the prepared pancake mix",
+                    "table": null,
+                    "doc_string": null
+                },
+                {
+                    "type": "Then",
+                    "text": "I get a cooked pancake",
+                    "table": null,
+                    "doc_string": null
+                },
+                {
+                    "type": "When",
+                    "text": "I top the pancake with the following ingredients:",
+                    "table": {
+                        "ingredient": [
+                            "Butter",
+                            "Maple syrup",
+                            "Blueberry"
+                        ]
+                    },
+                    "doc_string": null
+                },
+                {
+                    "type": "Then",
+                    "text": "I get an american pancake",
+                    "table": null,
+                    "doc_string": null
+                },
+                {
+                    "type": "When",
+                    "text": "I wait for the pancake to cool down",
+                    "table": null,
+                    "doc_string": null
+                },
+                {
+                    "type": "Then",
+                    "text": "the pancake is edible",
+                    "table": null,
+                    "doc_string": null
+                },
+                {
+                    "type": "But",
+                    "text": "the butter is melted",
+                    "table": null,
+                    "doc_string": null
+                }
+            ],
+            "outline": null
+        },
+        {
+            "tags": null,
+            "name": "Making eggs",
+            "description": "        This scenario does not include all the egg making method, only selected ones.",
+            "steps": [
+                {
+                    "type": "Given",
+                    "text": "I have fresh eggs",
+                    "table": null,
+                    "doc_string": null
+                },
+                {
+                    "type": "Given",
+                    "text": "I prepare the eggs by <preparing>",
+                    "table": null,
+                    "doc_string": null
+                },
+                {
+                    "type": "When",
+                    "text": "I <cook> the eggs for \"<minute>\" minutes",
+                    "table": null,
+                    "doc_string": null
+                },
+                {
+                    "type": "Then",
+                    "text": "I get \"<name>\" eggs",
+                    "table": null,
+                    "doc_string": null
+                }
+            ],
+            "outline": {
+                "name": [
+                    "Sunny side up",
+                    "Scrambled",
+                    "Soft boiled",
+                    "Hard boiled",
+                    "Poached"
+                ],
+                "preparing": [
+                    "cracking it into a pan",
+                    "mixing it till consistency",
+                    "placing it in boiling water",
+                    "placing it in boiling water",
+                    "cracking it into simmering water"
+                ],
+                "cook": [
+                    "fry",
+                    "fry",
+                    "boil",
+                    "boil",
+                    "poach"
+                ],
+                "minute": [
+                    "3",
+                    "5",
+                    "6",
+                    "12",
+                    "4"
+                ]
+            }
+        }
+    ]
+}
