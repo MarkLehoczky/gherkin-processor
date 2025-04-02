@@ -97,10 +97,12 @@ def main() -> None:
     args = parse_arguments()
 
     try:
-        gherkin = load(args.input, args.validate)
+        processed = load(args.input, args.validate)
     except (IOError, TypeError, ValueError) as e:
         print(e, file=stderr)
         return
+
+    gherkin = Gherkin() if processed is None else processed
 
     if args.save:
         save_gherkin(args, gherkin)

@@ -1,11 +1,8 @@
-> [!IMPORTANT]  
-> The current README is under update. Some information may be outdated and may contain dead links.
-
 <div align="center">
 
 # GHERKIN PROCESSOR
 
-**Gherkin Processor** is a Python package that processes Gherkin files into Python *dataclasses*. It provides utilities for validating, processing, and saving Gherkin scenarios in both text and JSON formats.
+**Gherkin Processor** is a *Python* package that processes *Gherkin* files into *Python* dataclasses. It provides utilities for validating, processing, and saving *Gherkin* in both text and *Json* formats.
 
 ---
 
@@ -24,20 +21,21 @@
 
 ## Features
 
-- Gherkin scenario validation
-- Gherkin scenario syntax issue description
-- Gherkin scenario content processing into Python dataclass
-- Save processed scenarios in text or JSON format
-- Directly load scenarios from file paths
+- Gherkin content processing into modular Python dataclasses
+- Gherkin syntax validation
+- I/O operations for loading Gherkin files and saving Gherkin content either with Gherkin syntax or with Json syntax
+- Command line execution for Gherkin file processing, validation and I/O operations
 
 ## Installation
 
 You can install the **Gherkin Processor** package by cloning the repository or downloading from the releases.
 
-> Requirements:
-> - Python 3.10+ version with pip installed
-
 ### Clone the Repository
+
+> Requirements:
+> - [git](https://git-scm.com/downloads) is installed and added to PATH
+> - [Python 3.10+](https://www.python.org/downloads/) version is installed and added to PATH
+> - [pip](https://pypi.org/project/pip/) is installed and added to PATH (often already installed with Python)
 
 ```sh
 # 1. Clone the repository
@@ -47,10 +45,10 @@ git clone https://github.com/MarkLehoczky/gherkin-processor.git
 cd gherkin-processor
 
 # 3. Install the package
-pip install .
+python -m pip install .
 
 # (Optional) 4. Install the necessary python packages for pre-commit hook
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 
 # (Optional) 5. Change the git pre-commit hook to the custom pre-commit configuration
 pre-commit install
@@ -58,53 +56,79 @@ pre-commit install
 
 ### Download from Releases
 
+> Requirements:
+> - [Python 3.10+](https://www.python.org/downloads/) version is installed and added to PATH
+> - [pip](https://pypi.org/project/pip/) is installed and added to PATH (often already installed with Python)
+
 1. Go to the [Releases](https://github.com/MarkLehoczky/gherkin-processor/releases) page.
 2. Download the latest release.
 3. Extract the downloaded file.
 4. Navigate to the extracted directory.
 5. Install the package by clicking on the install file
-    - *Windows file*: "[Install.bat](./Install.bat)"
-    - *Linux file*: "[Install.sh](./Install.sh)"
+    - *Windows file*: "Windows_installer"
+    - *Linux file*: "Linux_installer"
+    - *MacOS file*: **Not available**, can be created by compiling the [install_package.py](./install_package.py) script
 
 ## Usage
+
+> [!WARNING]  
+> The examples are not implemented yet. The links will navigate to a 404 error page.
 
 ### Command Line Interface
 
 The **Gherkin Processor** can be used via the command line interface (CLI).
 
 ```sh
-gherkin-processor [-h] -i INPUT [-p] [-s] [--save-as-json] [--validate]
+gherkin-processor [-h] -i INPUT [-o OUTPUT] [-p] [-s] [-j] [-y] [-v]
 ```
 
 #### Options
 
 ```text
--h, --help                 show this help message and exit
--i INPUT, --input INPUT    specify the input Gherkin file location to process
--p, --print                print the processed Gherkin scenario to the standard output
--s, --save                 save the processed Gherkin scenario to a file
---save-as-json             save the processed Gherkin scenario to a file in JSON format
---validate                 validate the input Gherkin file syntax
+-h, --help                  show this help message and exit
+-i, --input INPUT           input file path
+-o, --output OUTPUT         output file of the savings
+-p, --print                 write the input file Gherkin syntax to standard output
+-s, --save, --save-gherkin  save file as Gherkin
+-j, --json, --save-json     save file as JSON
+-y, --yes, --force-yes      automatically press 'y' for every user input request
+-v, --validate              validate the input file syntax
 ```
 
-See the [CLI examples](examples/cli.ipynb) for details.
+See the [CLI examples](examples/command_line_interface.ipynb) for details.
 
-### Python API
+### Python Module
 
 The **Gherkin Processor** can also be used programmatically in a Python code.
 
 ```python
-from gherkin_processor.utils import scenario    # file
-from gherkin_processor.scenario import Scenario # class
+from gherkin_processor.util import process, save, validate
 
-# Load and process the scenario from a file
-processed_scenario: Scenario = scenario.load("path/to/scenario.feature")
+# Example Gherkin text
+gherkin_text = """
+Feature: User login
+  Scenario: Successful login
+    Given the user navigates to the login page
+    When the user enters valid credentials
+    Then the user should be redirected to the dashboard"""
 
-# Save the processed scenario to a file
-scenario.save(processed_scenario, "path/to/saved_scenario.feature")
+# Process the Gherkin text
+gherkin = process(gherkin_text)
+
+# Validate the Gherkin text (with an exception raised if invalid)
+try:
+    validate(gherkin_text)
+    print("Gherkin text is valid.")
+except Exception as e:
+    print(f"Gherkin text validation failed: {e}")
+
+# Save the processed Gherkin object to a file with Gherkin syntax
+save(gherkin, "user_login.feature", "GHERKIN")
+# Save the processed Gherkin object to a file with Json syntax
+save(gherkin, "user_login.json", "JSON")
 ```
 
-See the [API examples](examples/api.ipynb) and [Data class structure](examples/data.ipynb) for details.
+See the [Module examples](examples/modules.ipynb) and [Data class structure](examples/classes.ipynb) for details.
 
 ## License
 
