@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> The current README is under update. Some information may be outdated and may contain dead links.
+
 <div align="center">
 
 # GHERKIN PROCESSOR
