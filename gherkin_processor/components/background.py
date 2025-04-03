@@ -105,7 +105,7 @@ class Background:
             valid_syntax &= is_valid
 
         if start < num:
-            valid_syntax &= self._process_last_component((previous, step), start, lines, validate)
+            valid_syntax &= self._process_last_component(step, start, lines, validate)
         return valid_syntax and is_valid
 
     def _handle_docstring(self, status: str, doc_string: str, line: Tuple[int, str], validate: bool) -> Tuple[str, str, bool]:
@@ -189,19 +189,17 @@ class Background:
             return current, step, end, is_valid
         return current, step, start, is_valid
 
-    def _process_last_component(self, status: Tuple[str, str], start: int, lines: List[str], validate: bool) -> bool:
-        previous, step = status
+    def _process_last_component(self, step: str, start: int, lines: List[str], validate: bool) -> bool:
         is_valid: bool = True
-        if previous == "GIVEN":
-            if self.steps is None:
-                self.steps = []
-            self.steps.append(Step())
-            if lines[start].strip().startswith("And "):
-                fixed_step = lines[start].replace("And", step.capitalize(), 1)
-                is_valid = self.steps[-1].process(("\n" * start) + fixed_step + "\n" + "\n".join(lines[start+1:]), validate)
-            elif lines[start].strip().startswith("* "):
-                fixed_step = lines[start].replace("*", step.capitalize(), 1)
-                is_valid = self.steps[-1].process(("\n" * start) + fixed_step + "\n" + "\n".join(lines[start+1:]), validate)
-            else:
-                is_valid = self.steps[-1].process(("\n" * start) + "\n".join(lines[start:]), validate)
+        if self.steps is None:
+            self.steps = []
+        self.steps.append(Step())
+        if lines[start].strip().startswith("And "):
+            fixed_step = lines[start].replace("And", step.capitalize(), 1)
+            is_valid = self.steps[-1].process(("\n" * start) + fixed_step + "\n" + "\n".join(lines[start+1:]), validate)
+        elif lines[start].strip().startswith("* "):
+            fixed_step = lines[start].replace("*", step.capitalize(), 1)
+            is_valid = self.steps[-1].process(("\n" * start) + fixed_step + "\n" + "\n".join(lines[start+1:]), validate)
+        else:
+            is_valid = self.steps[-1].process(("\n" * start) + "\n".join(lines[start:]), validate)
         return is_valid

@@ -23,8 +23,24 @@
 
 - Gherkin content processing into modular Python dataclasses
 - Gherkin syntax validation
-- I/O operations for loading Gherkin files and saving Gherkin content either with Gherkin syntax or with Json syntax
-- Command line execution for Gherkin file processing, validation and I/O operations
+- Input and output (I/O) operations:
+    - I/O operations for loading and processing Gherkin files
+    - I/O operations for saving Gherkin content with Gherkin syntax
+    - I/O operations for saving Gherkin content with Json syntax
+- Command line inteface (CLI):
+    -  CLI for Gherkin file processing
+    -  CLI for Gherkin file validation
+    -  CLI for Gherkin file printing
+    -  CLI for Gherkin file saving with Gherkin syntax
+    -  CLI for Gherkin file saving with Json syntax
+
+### Planned Improvements
+
+- [ ] Alternative keywords for repeated step types
+- [ ] Optional indentation for the Gherkin syntax
+- [ ] Optional exclusion of `None` value items from Json
+- [ ] Load and process Gherkin content from Json format
+- [ ] Directory and subdirectories support for the CLI
 
 ## Installation
 
@@ -65,14 +81,11 @@ pre-commit install
 3. Extract the downloaded file.
 4. Navigate to the extracted directory.
 5. Install the package by clicking on the install file
-    - *Windows file*: "Windows_installer"
+    - *Windows file*: "Windows_installer.exe"
     - *Linux file*: "Linux_installer"
     - *MacOS file*: **Not available**, can be created by compiling the [install_package.py](./install_package.py) script
 
 ## Usage
-
-> [!WARNING]  
-> The examples are not implemented yet. The links will navigate to a 404 error page.
 
 ### Command Line Interface
 
@@ -105,22 +118,23 @@ The **Gherkin Processor** can also be used programmatically in a Python code.
 from gherkin_processor.util import process, save, validate
 
 # Example Gherkin text
-gherkin_text = """
-Feature: User login
-  Scenario: Successful login
-    Given the user navigates to the login page
-    When the user enters valid credentials
-    Then the user should be redirected to the dashboard"""
+gherkin_text = """Feature: User login
 
-# Process the Gherkin text
-gherkin = process(gherkin_text)
+  Scenario: Login attempt with valid credentials
+    Given I navigate to the login page
+    When I enter the username "user@example.com"
+    And I enter the password "password123"
+    Then I am navigated to the homepage"""
 
 # Validate the Gherkin text (with an exception raised if invalid)
 try:
     validate(gherkin_text)
     print("Gherkin text is valid.")
-except Exception as e:
+except ValueError as e:
     print(f"Gherkin text validation failed: {e}")
+
+# Process the Gherkin text
+gherkin = process(gherkin_text, validate=False)
 
 # Save the processed Gherkin object to a file with Gherkin syntax
 save(gherkin, "user_login.feature", "GHERKIN")

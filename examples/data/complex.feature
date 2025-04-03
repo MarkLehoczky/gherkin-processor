@@ -1,46 +1,60 @@
-Feature: Making breakfast
-Describes a morning routine regarding breakfast making of an average person.
+Feature: User Login
+Describes the process of logging into a web application for an average user.
 
-  Rule: Only one breakfast meal should be prepared
-  The morning routine should include breakfast for only one person.
+  Rule: Only registered users can log in
+  Users must have a registered account to log in to the application.
 
     Background:
-    The default assumption is that every breakfast comes with coffee.
-      Given I have coffee grounds
-      And I add hot water
-      * I get a cup of coffee
+    The default assumption is that the user is trying to log in with their email and password.
+      Given the user accounts are registered with the following details:
+      | username          | password    |
+      | user@example.com  | password123 |
+      And the admin accounts are registered with the following details:
+      | username           | password    |
+      | admin@example.com  | password135 |
 
-        @european
-        @american @canadian
-        Scenario: Making pancake
-          Given I have pancake mix prepared the following way:
+        @web
+        @admin @user
+        Scenario: Login attempt with valid credentials
+          Given the user navigates to the login page
+          And the user enters the username "user@example.com"
+          * the user enters the password "password123"
+          When the user clicks the "Log In" button
+          Then the user is navigated to the homepage
+          And the following message is displayed:
           """
-            Add ½ cup milk, 1 cup baking mix, 1 tbsp olive oil and 1 egg into a bowl.
-            Stir the mix until the texture is consistent.
+            Welcome in our application.
+            Feel free to connect with other people, companies and organisations.
           """
-          When I cook the prepared pancake mix
-          Then I get a cooked pancake
-          When I top the pancake with the following ingredients:
-          | ingredient  |
-          | Butter      |
-          | Maple syrup |
-          | Blueberry   |
-          Then I get an american pancake
-          When I wait for the pancake to cool down
-          Then the pancake is edible
-          But the butter is melted
+          And the following header links are available:
+          | header_link |
+          | About Us    |
+          | Contact     |
+          | Profile     |
+          When the user logs out
+          Then the user is navigated to the login page
+          When the user enters the username "admin@example.com"
+          And the user enters the password "password135"
+          Then the user is navigated to the admin page
+          And the following message is displayed: "Admin console."
+          But the following message is not displayed:
+          """
+            Welcome in our application.
+            Feel free to connect with other people, companies and organisations.
+          """
 
-        Scenario Outline: Making eggs
-        This scenario does not include all the egg making method, only selected ones.
-          Given I have fresh eggs
-          And I prepare the eggs by <preparing>
-          When I <cook> the eggs for "<minute>" minutes
-          Then I get "<name>" eggs
+        Scenario Outline: Login attempt with invalid credentials
+        This scenario does not include all failure cases, only selected ones.
+          Given the user navigates to the login page
+          And the user enters the username "<username>"
+          * the user enters the password "<password>"
+          When the user clicks the "Log In" button
+          Then the following error message is displayed: "<error_message>"
 
         Scenarios:
-          | name          | preparing                        | cook  | minute |
-          | Sunny side up | cracking it into a pan           | fry   | 3      |
-          | Scrambled     | mixing it till consistency       | fry   | 5      |
-          | Soft boiled   | placing it in boiling water      | boil  | 6      |
-          | Hard boiled   | placing it in boiling water      | boil  | 12     |
-          | Poached       | cracking it into simmering water | poach | 4      |
+          | username            | password | error_message                      |
+          | invalid@example.com | valid    | Incorrect username or password     |
+          | user@example.com    | invalid  | Incorrect username or password     |
+          |                     | valid    | Username is required               |
+          | user@example.com    |          | Password is required               |
+          |                     |          | Username and password are required |
