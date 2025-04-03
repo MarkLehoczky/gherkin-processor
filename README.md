@@ -2,7 +2,7 @@
 
 # GHERKIN PROCESSOR
 
-**Gherkin Processor** is a *Python* package that processes *Gherkin* files into *Python* dataclasses. It provides utilities for validating, processing, and saving *Gherkin* in both text and *Json* formats.
+**Gherkin Processor** is a *Python* package that processes *Gherkin* files into *Python* dataclasses. It provides utilities for validating, processing, and saving *Gherkin* in both text and *JSON* formats.
 
 ---
 
@@ -19,28 +19,34 @@
 
 </div>
 
-## Features
+## Implemented & Planned Features
 
-- Gherkin content processing into modular Python dataclasses
-- Gherkin syntax validation
-- Input and output (I/O) operations:
-    - I/O operations for loading and processing Gherkin files
-    - I/O operations for saving Gherkin content with Gherkin syntax
-    - I/O operations for saving Gherkin content with Json syntax
-- Command line inteface (CLI):
-    -  CLI for Gherkin file processing
-    -  CLI for Gherkin file validation
-    -  CLI for Gherkin file printing
-    -  CLI for Gherkin file saving with Gherkin syntax
-    -  CLI for Gherkin file saving with Json syntax
+**Gherkin Content**
 
-### Planned Improvements
+- [x] Convert Gherkin content into Python classes
+- [x] Validate Gherkin syntax
+- [x] Convert processed Gherkin content back into Gherkin syntax
+- [x] Convert processed Gherkin content into JSON format
+- [ ] Support optional alternative keywords for repeated steps when converting to Gherkin syntax
+- [ ] Support optional indentation when converting to Gherkin syntax
+- [ ] Optionally exclude `None` values when converting to JSON
 
-- [ ] Alternative keywords for repeated step types
-- [ ] Optional indentation for the Gherkin syntax
-- [ ] Optional exclusion of `None` value items from Json
-- [ ] Load and process Gherkin content from Json format
-- [ ] Directory and subdirectories support for the CLI
+**Input & Output (I/O) Operations**
+
+- [x] Load and process Gherkin files
+- [x] Save Gherkin content in Gherkin syntax
+- [x] Save Gherkin content in JSON format
+- [ ] Load and process Gherkin content from JSON files
+
+**Command-Line Interface (CLI)**
+
+- [x] Process Gherkin files
+- [x] Validate Gherkin files
+- [x] Print Gherkin content
+- [x] Save Gherkin content in Gherkin syntax
+- [x] Save Gherkin content in JSON format
+- [ ] Support batch processing for all files in a directory
+- [ ] Support recursive batch processing for directories and subdirectories
 
 ## Installation
 
@@ -60,11 +66,11 @@ git clone https://github.com/MarkLehoczky/gherkin-processor.git
 # 2. Navigate to the cloned directory
 cd gherkin-processor
 
-# 3. Install the package
-python -m pip install .
+# 3. Install the package (with editable install)
+pip install -e .
 
 # (Optional) 4. Install the necessary python packages for pre-commit hook
-python -m pip install -r requirements.txt
+pip install -r requirements.txt
 
 # (Optional) 5. Change the git pre-commit hook to the custom pre-commit configuration
 pre-commit install
@@ -80,10 +86,21 @@ pre-commit install
 2. Download the latest release.
 3. Extract the downloaded file.
 4. Navigate to the extracted directory.
-5. Install the package by clicking on the install file
-    - *Windows file*: "Windows_installer.exe"
-    - *Linux file*: "Linux_installer"
-    - *MacOS file*: **Not available**, can be created by compiling the [install_package.py](./install_package.py) script
+5. Run the installer based on the operating system
+    - **Windows**: Run `Windows_installer.exe`
+    - **Linux**: Run `./Linux_installer`
+    - **MacOS**: ***Not available***
+    - *Alternative solutions:*
+        - Run the Python installation script:
+          ```sh
+          python ./install_package.py
+          ```
+        - Compile the script into an executable:
+          ```sh
+          pip install pyinstaller
+          pyinstaller --onefile ./install_package.py
+          ./dist/install_package
+          ```
 
 ## Usage
 
@@ -138,7 +155,7 @@ gherkin = process(gherkin_text, validate=False)
 
 # Save the processed Gherkin object to a file with Gherkin syntax
 save(gherkin, "user_login.feature", "GHERKIN")
-# Save the processed Gherkin object to a file with Json syntax
+# Save the processed Gherkin object to a file with JSON syntax
 save(gherkin, "user_login.json", "JSON")
 ```
 
