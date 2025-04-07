@@ -1,4 +1,4 @@
-name: Complete Test Suite
+name: Smoke Test Suite
 
 on:
   workflow_call:

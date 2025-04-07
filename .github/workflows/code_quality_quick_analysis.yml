@@ -1,4 +1,4 @@
-name: Code Quality Analysis
+name: Code Quality Quick Analysis
 
 on:
   workflow_call:
