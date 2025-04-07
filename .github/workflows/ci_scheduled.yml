@@ -1,0 +1,13 @@
+name: Scheduled CI Workflow
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+
+jobs:
+  Test:
+    strategy:
+      matrix:
+        task: [""]
+    name: Latest Python Version Compatibility Verification
+    uses: ./.github/workflows/smoke_test_suite.yml
