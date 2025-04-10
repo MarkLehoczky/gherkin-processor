@@ -12,7 +12,7 @@ from sys import stderr
 from typing import Any
 
 from gherkin_processor.gherkin import Gherkin
-from gherkin_processor.util import load, save
+from gherkin_processor.utils import load, save
 
 
 class CustomHelpFormatter(HelpFormatter):
@@ -56,10 +56,10 @@ def save_gherkin(args: Namespace, gherkin: Gherkin) -> None:
         gherkin (Gherkin): The loaded Gherkin data to be saved.
     """
     path = abspath(args.input)
-    direrctory = dirname(path)
+    directory = dirname(path)
     filename, extension = splitext(basename(path))
     args.output = args.input if args.output is None else args.output
-    args.output = args.output.replace("<DIR>", direrctory).replace("<DIRECTORY>", direrctory)
+    args.output = args.output.replace("<DIR>", directory).replace("<DIRECTORY>", directory)
     args.output = args.output.replace("<NAME>", filename).replace("<FILENAME>", filename)
 
     defined_output = args.output.replace("<EXT>", extension).replace("<EXTENSION>", extension)
@@ -76,10 +76,10 @@ def save_json(args: Namespace, gherkin: Gherkin) -> None:
         gherkin (Gherkin): The loaded Gherkin data to be saved.
     """
     path = abspath(args.input)
-    direrctory = dirname(path)
+    directory = dirname(path)
     filename, extension = splitext(basename(path))
     args.output = args.input if args.output is None else args.output
-    args.output = args.output.replace("<DIR>", direrctory).replace("<DIRECTORY>", direrctory)
+    args.output = args.output.replace("<DIR>", directory).replace("<DIRECTORY>", directory)
     args.output = args.output.replace("<NAME>", filename).replace("<FILENAME>", filename)
 
     defined_output = args.output.replace(extension, ".json").replace("<EXT>", ".json").replace("<EXTENSION>", ".json")

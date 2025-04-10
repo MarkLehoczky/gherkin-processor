@@ -1,6 +1,6 @@
 from pytest import raises
 
-from gherkin_processor.util import is_valid, issue, validate
+from gherkin_processor.utils import is_valid, issue, validate
 
 
 def test_is_valid():

@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from re import findall
 from typing import Any, Dict, List, Tuple
 
-from gherkin_processor.utils.private.formatters import format_table
+from gherkin_processor.private.formatters import format_table
 
 
 @dataclass

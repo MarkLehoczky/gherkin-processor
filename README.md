@@ -125,7 +125,7 @@ gherkin-processor [-h] -i INPUT [-o OUTPUT] [-p] [-s] [-j] [-y] [-v]
 -v, --validate              validate the input file syntax
 ```
 
-See the [CLI examples](examples/command_line_interface.ipynb) for details.
+See the CLI [documentation](docs/cli.md) and [examples](examples/cli.ipynb) for details.
 
 ### Python Module
 
@@ -159,7 +159,7 @@ save(gherkin, "user_login.feature", "GHERKIN")
 save(gherkin, "user_login.json", "JSON")
 ```
 
-See the [Module examples](examples/modules.ipynb) and [Data class structure](examples/classes.ipynb) for details.
+See the Module [documentation](docs/modules.md) and [examples](examples/modules.ipynb) and the Data class structure [documentation](docs/classes.md) and [examples](examples/classes.ipynb) for details.
 
 ## License
 

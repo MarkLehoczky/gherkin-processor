@@ -5,9 +5,10 @@ This module provides high-level Gherkin utilities for processing, loading, savin
 
 from dataclasses import asdict
 from json import dumps
-from os.path import abspath, exists, isfile
+from os import makedirs
+from os.path import abspath, dirname, exists, isfile
 
-from gherkin_processor import Gherkin
+from gherkin_processor.gherkin import Gherkin
 
 
 def process(gherkin_text: str, validate_text: bool = False) -> Gherkin:
@@ -19,6 +20,10 @@ def process(gherkin_text: str, validate_text: bool = False) -> Gherkin:
 
     Returns:
         Gherkin: The processed Gherkin object.
+
+    Raises:
+        TypeError: If `text` is not a string.
+        ValueError: If `validate` is True and the Gherkin syntax has issues.
     """
     gherkin = Gherkin()
     gherkin.process(gherkin_text, validate_text)
@@ -34,6 +39,10 @@ def load(file_path: str, validate_text: bool = False) -> Gherkin | None:
 
     Returns:
         Gherkin | None: The Gherkin object if the file exists and is valid, otherwise None.
+
+    Raises:
+        TypeError: If `text` is not a string.
+        ValueError: If `validate` is True and the Gherkin syntax has issues.
     """
     if file_path is not None and exists(file_path) and isfile(file_path):
         return Gherkin(file_path, validate_text)
@@ -53,6 +62,9 @@ def save(gherkin: Gherkin, file_path: str, mode: str = "GHERKIN", override_exist
         bool: True if the file was saved successfully, otherwise False.
     """
     if not exists(abspath(file_path)) or override_existing_file:
+        output_dir = dirname(file_path)
+        if not exists(output_dir):
+            makedirs(output_dir)
         with open(file_path, "w", encoding="utf-8", errors="namereplace") as file:
             if mode in ["JSON", "JSON5"]:
                 file.write(dumps(asdict(gherkin), indent=4))
@@ -67,6 +79,10 @@ def validate(gherkin_text: str) -> None:
 
     Args:
         gherkin_text (str): The Gherkin text to validate.
+
+    Raises:
+        TypeError: If `text` is not a string.
+        ValueError: If `validate` is True and the Gherkin syntax has issues.
     """
     Gherkin().process(gherkin_text, True)
 

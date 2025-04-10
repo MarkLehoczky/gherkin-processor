@@ -7,8 +7,7 @@ from dataclasses import dataclass
 from typing import Any, Dict, List, Tuple
 
 from gherkin_processor.components.step import Step
-from gherkin_processor.utils.private.positions import \
-    ALLOWED_BACKGROUND_POSITIONS
+from gherkin_processor.private.positions import ALLOWED_BACKGROUND_POSITIONS
 
 
 @dataclass

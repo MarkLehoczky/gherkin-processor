@@ -10,7 +10,7 @@ from gherkin_processor.components.background import Background
 from gherkin_processor.components.feature import Feature
 from gherkin_processor.components.rule import Rule
 from gherkin_processor.components.scenario import Scenario
-from gherkin_processor.utils.private.positions import ALLOWED_POSITIONS
+from gherkin_processor.private.positions import ALLOWED_POSITIONS
 
 
 @dataclass

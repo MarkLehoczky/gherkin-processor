@@ -7,9 +7,8 @@ from dataclasses import dataclass
 from typing import Any, Dict, List, Tuple
 
 from gherkin_processor.components.step import Step
-from gherkin_processor.utils.private.formatters import format_table
-from gherkin_processor.utils.private.positions import \
-    ALLOWED_SCENARIO_POSITIONS
+from gherkin_processor.private.formatters import format_table
+from gherkin_processor.private.positions import ALLOWED_SCENARIO_POSITIONS
 
 
 @dataclass

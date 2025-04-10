@@ -1,7 +1,7 @@
 from os.path import exists
 
 from gherkin_processor.gherkin import Gherkin
-from gherkin_processor.util import load, save
+from gherkin_processor.utils import load, save
 from tests.decorators import after, before
 from tests.functions import empty_output_directory
 
