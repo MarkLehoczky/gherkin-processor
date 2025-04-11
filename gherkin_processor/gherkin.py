@@ -1,6 +1,6 @@
-"""Gherkin Processor Module.
+"""Define the Gherkin class, which is responsible for parsing and processing Gherkin syntax files.
 
-This module provides functionality to process Gherkin syntax content into a Python class representation.
+It provides functionality to validate, process, and convert Gherkin components into string or dictionary representations.
 """
 
 from dataclasses import dataclass
@@ -15,14 +15,26 @@ from gherkin_processor.private.positions import ALLOWED_POSITIONS
 
 @dataclass
 class Gherkin:
-    """Represent a Gherkin document with its components.
+    """Represent a Gherkin file and its components.
 
     Attributes:
-        file (Optional[str]): The file path of the Gherkin source (if any).
-        feature (Feature): The feature definition in the Gherkin document.
-        rule (Rule): The rule section of the Gherkin document.
-        background (Background): The background section of the Gherkin document.
-        scenarios (List[Scenario]): The list of scenarios present in the document.
+        file (Optional[str]): The file path of the Gherkin file being processed.
+        feature (Feature): The feature component of the Gherkin file.
+        rule (Rule): The rule component of the Gherkin file.
+        background (Background): The background component of the Gherkin file.
+        scenarios (List[Scenario]): A list of scenarios defined in the Gherkin file.
+
+    Methods:
+        __init__(file_path: Optional[str] = None, validate: bool = True):
+            Initialize the Gherkin object and optionally process a file.
+        __str__() -> str:
+            Return the string representation of the Gherkin object.
+        to_string() -> str:
+            Convert the Gherkin object to a string representation.
+        to_dictionary() -> Dict[str, Any]:
+            Convert the Gherkin object to a dictionary representation.
+        process(text: str, validate: bool) -> bool:
+            Process the Gherkin text and validate its syntax.
     """
 
     file: Optional[str]
@@ -32,7 +44,12 @@ class Gherkin:
     scenarios: List[Scenario]
 
     def __init__(self, file_path: Optional[str] = None, validate: bool = True) -> None:
-        """Initialize a Gherkin document with default empty components."""
+        """Initialize the Gherkin object.
+
+        Args:
+            file_path (Optional[str]): The path to the Gherkin file to be processed.
+            validate (bool): Whether to validate the syntax during processing.
+        """
         self.file = None
         self.feature = Feature()
         self.rule = Rule()
@@ -45,14 +62,18 @@ class Gherkin:
                 self.process(text.read(), validate)
 
     def __str__(self) -> str:
-        """Return string representation of the Gherkin document."""
+        """Return the string representation of the Gherkin object.
+
+        Returns:
+            str: The string representation of the Gherkin object.
+        """
         return self.to_string()
 
     def to_string(self) -> str:
-        """Convert the Gherkin document into a formatted string representation.
+        """Convert the Gherkin object to a string representation.
 
         Returns:
-            str: A string representation of the Gherkin document.
+            str: The string representation of the Gherkin object.
         """
         lines: List[str] = []
         lines.append(str(self.feature))
@@ -62,10 +83,10 @@ class Gherkin:
         return "\n".join(lines)
 
     def to_dictionary(self) -> Dict[str, Any]:
-        """Convert the Gherkin document into a dictionary representation.
+        """Convert the Gherkin object to a dictionary representation.
 
         Returns:
-            Dict[str, Any]: Dictionary containing the Gherkin document components.
+            Dict[str, Any]: A dictionary containing the Gherkin components.
         """
         return {
             "feature": self.feature,
@@ -75,18 +96,18 @@ class Gherkin:
         }
 
     def process(self, text: str, validate: bool) -> bool:
-        """Process Gherkin syntax content and update the object accordingly.
+        """Process the Gherkin text and validate its syntax.
 
         Args:
-            text (str): The Gherkin syntax content to be processed.
-            validate (bool): If True, performs syntax validation.
+            text (str): The Gherkin text to be processed.
+            validate (bool): Whether to validate the syntax during processing.
 
         Returns:
-            bool: True if processing is successful.
+            bool: True if the syntax is valid, False otherwise.
 
         Raises:
-            TypeError: If `text` is not a string.
-            ValueError: If `validate` is True and the Gherkin syntax has issues.
+            TypeError: If the 'text' argument is not a string.
+            ValueError: If validation fails for the step syntax.
         """
         if validate and not isinstance(text, str):
             raise TypeError("Variable 'text' is not string type")

@@ -1,18 +1,19 @@
-"""Formatter Utilities Module.
+"""Provide utility functions for formatting Gherkin components.
 
-This module provides functionality to format different data types.
+This module includes functions to format Gherkin components, such as tables, into string representations.
 """
+
 from typing import Dict, List
 
 
 def format_table(table: Dict[str, List[str]]) -> str:
-    """Format a table from dictionary form into a pipe string form.
+    """Format a dictionary representing a table into a string.
 
     Args:
-        table (Dict[str, List[str]]): Table in dictionary form.
+        table (Dict[str, List[str]]): A dictionary where keys are column headers and values are lists of column values.
 
     Returns:
-        str: Table in string form.
+        str: A formatted string representation of the table.
     """
     headers: List[str] = list(table.keys())
     values: List[List[str]] = list(table.values())

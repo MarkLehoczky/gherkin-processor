@@ -1,6 +1,6 @@
-"""Gherkin Feature Processor Module.
+"""Define the Feature class, which represents a Gherkin feature.
 
-This module provides functionality to process Gherkin feature content into a Python class representation.
+The Feature class provides functionality to process, validate, and convert feature components into string or dictionary representations.
 """
 
 from dataclasses import dataclass
@@ -9,30 +9,46 @@ from typing import Any, Dict, List
 
 @dataclass
 class Feature:
-    """Represent a Gherkin feature with its components.
+    """Represent a Gherkin feature.
 
     Attributes:
-        name (str | None): The name of the Gherkin feature.
-        description (str | None): The description of the Gherkin feature (if any).
+        name (str): The name of the feature.
+        description (str | None): The description of the feature.
+
+    Methods:
+        __init__() -> None:
+            Initialize the Feature object with default values.
+        __str__() -> str:
+            Return the string representation of the Feature object.
+        to_string() -> str:
+            Convert the Feature object to a string representation.
+        to_dictionary() -> Dict[str, Any]:
+            Convert the Feature object to a dictionary representation.
+        process(text: str, validate: bool) -> bool:
+            Process the feature text and validate its syntax.
     """
 
     name: str
     description: str | None
 
     def __init__(self) -> None:
-        """Initialize a Gherkin feature with default empty components."""
+        """Initialize the Feature object with default values."""
         self.name = ""
         self.description = None
 
     def __str__(self) -> str:
-        """Return string representation of the Gherkin feature."""
+        """Return the string representation of the Feature object.
+
+        Returns:
+            str: The string representation of the Feature object.
+        """
         return self.to_string()
 
     def to_string(self) -> str:
-        """Convert the Gherkin feature into a formatted string representation.
+        """Convert the Feature object to a string representation.
 
         Returns:
-            str: A string representation of the Gherkin feature.
+            str: The string representation of the Feature object.
         """
         lines: List[str] = []
         lines.append(f"Feature: {self.name}")
@@ -41,10 +57,10 @@ class Feature:
         return "\n".join(lines)
 
     def to_dictionary(self) -> Dict[str, Any]:
-        """Convert the Gherkin feature into a dictionary representation.
+        """Convert the Feature object to a dictionary representation.
 
         Returns:
-            Dict[str, Any]: Dictionary containing the Gherkin feature components.
+            Dict[str, Any]: The dictionary representation of the Feature object.
         """
         return {
             "name": self.name,
@@ -52,18 +68,18 @@ class Feature:
         }
 
     def process(self, text: str, validate: bool) -> bool:
-        """Process Gherkin feature content and update the object accordingly.
+        """Process the feature text and validate its syntax.
 
         Args:
-            text (str): The Gherkin feature content to be processed.
-            validate (bool): If True, performs syntax validation.
+            text (str): The feature text to be processed.
+            validate (bool): Whether to validate the syntax during processing.
 
         Returns:
-            bool: True if processing is successful.
+            bool: True if the syntax is valid, False otherwise.
 
         Raises:
-            TypeError: If `text` is not a string.
-            ValueError: If `validate` is True and the Gherkin feature has issues.
+            TypeError: If the 'text' argument is not a string.
+            ValueError: If validation fails for the feature syntax.
         """
         if not isinstance(text, str):
             raise TypeError("Variable 'text' is not string type")

@@ -1,6 +1,6 @@
-"""Gherkin Scenario Processor Module.
+"""Define the Scenario class, which represents a Gherkin scenario.
 
-This module provides functionality to process Gherkin scenario content into a Python class representation.
+The Scenario class provides functionality to process, validate, and convert scenario components into string or dictionary representations.
 """
 
 from dataclasses import dataclass
@@ -13,14 +13,26 @@ from gherkin_processor.private.positions import ALLOWED_SCENARIO_POSITIONS
 
 @dataclass
 class Scenario:
-    """Represent a Gherkin scenario with its components.
+    """Represent a Gherkin scenario.
 
     Attributes:
-        tags (List[str] | None): The tags of the Gherkin scenario (if any).
-        name (str): The name of the Gherkin scenario.
-        description (str | None): The description of the Gherkin scenario (if any).
-        steps (List[Step]): The list of steps present in the Gherkin scenario (if any).
-        outline (Dict[str, List[str]] | None): The outline table present in the Gherkin scenario (if any).
+        tags (List[str] | None): The tags associated with the scenario.
+        name (str): The name of the scenario.
+        description (str | None): The description of the scenario.
+        steps (List[Step]): The steps in the scenario.
+        outline (Dict[str, List[str]] | None): The outline table for scenario outlines.
+
+    Methods:
+        __init__() -> None:
+            Initialize the Scenario object with default values.
+        __str__() -> str:
+            Return the string representation of the Scenario object.
+        to_string() -> str:
+            Convert the Scenario object to a string representation.
+        to_dictionary() -> Dict[str, Any]:
+            Convert the Scenario object to a dictionary representation.
+        process(text: str, validate: bool) -> bool:
+            Process the scenario text and validate its syntax.
     """
 
     tags: List[str] | None
@@ -30,7 +42,7 @@ class Scenario:
     outline: Dict[str, List[str]] | None
 
     def __init__(self) -> None:
-        """Initialize a Gherkin scenario with default empty components."""
+        """Initialize the Scenario object with default values."""
         self.tags = None
         self.name = ""
         self.description = None
@@ -38,14 +50,14 @@ class Scenario:
         self.outline = None
 
     def __str__(self) -> str:
-        """Return string representation of the Gherkin scenario."""
+        """Return the string representation of the Scenario object."""
         return self.to_string()
 
     def to_string(self) -> str:
-        """Convert the Gherkin scenario into a formatted string representation.
+        """Convert the Scenario object to a string representation.
 
         Returns:
-            str: A string representation of the Gherkin scenario.
+            str: The string representation of the Scenario object.
         """
         lines: List[str] = []
         if self.tags is not None:
@@ -59,10 +71,10 @@ class Scenario:
         return "\n".join(lines)
 
     def to_dictionary(self) -> Dict[str, Any]:
-        """Convert the Gherkin scenario into a dictionary representation.
+        """Convert the Scenario object to a dictionary representation.
 
         Returns:
-            Dict[str, Any]: Dictionary containing the Gherkin scenario components.
+            Dict[str, Any]: The dictionary representation of the Scenario object.
         """
         return {
             "tags": self.tags,
@@ -73,18 +85,18 @@ class Scenario:
         }
 
     def process(self, text: str, validate: bool) -> bool:
-        """Process Gherkin scenario content and update the object accordingly.
+        """Process the scenario text and validate its syntax.
 
         Args:
-            text (str): The Gherkin scenario content to be processed.
-            validate (bool): If True, performs syntax validation.
+            text (str): The scenario text to be processed.
+            validate (bool): Whether to validate the syntax during processing.
 
         Returns:
-            bool: True if processing is successful.
+            bool: True if the syntax is valid, False otherwise.
 
         Raises:
-            TypeError: If `text` is not a string.
-            ValueError: If `validate` is True and the Gherkin scenario has issues.
+            TypeError: If the 'text' argument is not a string.
+            ValueError: If validation fails for the scenario syntax.
         """
         if not isinstance(text, str):
             raise TypeError("Variable 'text' is not string type")

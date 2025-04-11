@@ -1,6 +1,7 @@
-"""Utilities Module.
+"""Provide utility functions for processing, loading, saving, and validating Gherkin files.
 
-This module provides high-level Gherkin utilities for processing, loading, saving, and validating Gherkin text.
+This module includes helper functions to process Gherkin text, load Gherkin files, save them in various formats,
+and validate their syntax.
 """
 
 from dataclasses import asdict
@@ -12,18 +13,18 @@ from gherkin_processor.gherkin import Gherkin
 
 
 def process(gherkin_text: str, validate_text: bool = False) -> Gherkin:
-    """Process Gherkin text and returns a Gherkin object.
+    """Process Gherkin text and return a Gherkin object.
 
     Args:
         gherkin_text (str): The Gherkin text to process.
-        validate (bool, optional): Whether to validate the text. Defaults to False.
+        validate_text (bool): Whether to validate the syntax during processing.
 
     Returns:
         Gherkin: The processed Gherkin object.
 
     Raises:
-        TypeError: If `text` is not a string.
-        ValueError: If `validate` is True and the Gherkin syntax has issues.
+        TypeError: If the 'text' argument is not a string.
+        ValueError: If validation fails for the step syntax.
     """
     gherkin = Gherkin()
     gherkin.process(gherkin_text, validate_text)
@@ -31,18 +32,17 @@ def process(gherkin_text: str, validate_text: bool = False) -> Gherkin:
 
 
 def load(file_path: str, validate_text: bool = False) -> Gherkin | None:
-    """Load a Gherkin file and returns a Gherkin object.
+    """Load a Gherkin file and return a Gherkin object.
 
     Args:
         file_path (str): The path to the Gherkin file.
-        validate (bool, optional): Whether to validate the file content. Defaults to False.
+        validate_text (bool): Whether to validate the syntax during processing.
 
     Returns:
-        Gherkin | None: The Gherkin object if the file exists and is valid, otherwise None.
+        Gherkin | None: The loaded Gherkin object, or None if the file does not exist.
 
     Raises:
-        TypeError: If `text` is not a string.
-        ValueError: If `validate` is True and the Gherkin syntax has issues.
+        ValueError: If validation fails for the step syntax.
     """
     if file_path is not None and exists(file_path) and isfile(file_path):
         return Gherkin(file_path, validate_text)
@@ -50,16 +50,16 @@ def load(file_path: str, validate_text: bool = False) -> Gherkin | None:
 
 
 def save(gherkin: Gherkin, file_path: str, mode: str = "GHERKIN", override_existing_file: bool = False) -> bool:
-    """Save a Gherkin object to a file in the specified format.
+    """Save a Gherkin object to a file.
 
     Args:
         gherkin (Gherkin): The Gherkin object to save.
-        file_path (str): The path to save the file.
-        mode (str, optional): The format to save the file in ("GHERKIN", "JSON", or "JSON5"). Defaults to "GHERKIN".
-        override_existing_file (bool, optional): Whether to override an existing file. Defaults to False.
+        file_path (str): The path to the output file.
+        mode (str): The format to save the file in ("GHERKIN", or "JSON").
+        override_existing_file (bool): Whether to override the file if it already exists.
 
     Returns:
-        bool: True if the file was saved successfully, otherwise False.
+        bool: True if the file was saved successfully, False otherwise.
     """
     if not exists(abspath(file_path)) or override_existing_file:
         output_dir = dirname(file_path)
@@ -75,14 +75,14 @@ def save(gherkin: Gherkin, file_path: str, mode: str = "GHERKIN", override_exist
 
 
 def validate(gherkin_text: str) -> None:
-    """Validate Gherkin text by processing it with validation enabled.
+    """Validate the syntax of Gherkin text.
 
     Args:
         gherkin_text (str): The Gherkin text to validate.
 
     Raises:
-        TypeError: If `text` is not a string.
-        ValueError: If `validate` is True and the Gherkin syntax has issues.
+        TypeError: If the 'text' argument is not a string.
+        ValueError: If validation fails for the step syntax.
     """
     Gherkin().process(gherkin_text, True)
 
@@ -94,7 +94,7 @@ def is_valid(gherkin_text: str) -> bool:
         gherkin_text (str): The Gherkin text to validate.
 
     Returns:
-        bool: True if the text is valid, otherwise False.
+        bool: True if the syntax is valid, False otherwise.
     """
     try:
         Gherkin().process(gherkin_text, True)
@@ -104,13 +104,13 @@ def is_valid(gherkin_text: str) -> bool:
 
 
 def issue(gherkin_text: str) -> str:
-    """Process Gherkin text and returns any validation issues found.
+    """Return the validation issue for Gherkin text, if any.
 
     Args:
-        gherkin_text (str): The Gherkin text to check for issues.
+        gherkin_text (str): The Gherkin text to validate.
 
     Returns:
-        str: An error message if validation fails, otherwise an empty string.
+        str: The validation issue as a string, or an empty string if valid.
     """
     try:
         Gherkin().process(gherkin_text, True)

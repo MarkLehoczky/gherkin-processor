@@ -1,6 +1,6 @@
-"""Gherkin Rule Processor Module.
+"""Define the Rule class, which represents a Gherkin rule.
 
-This module provides functionality to process Gherkin rule content into a Python class representation.
+The Rule class provides functionality to process, validate, and convert rule components into string or dictionary representations.
 """
 
 from dataclasses import dataclass
@@ -9,30 +9,46 @@ from typing import Any, Dict, List
 
 @dataclass
 class Rule:
-    """Represent a Gherkin rule with its components.
+    """Represent a Gherkin rule.
 
     Attributes:
-        name (str | None): The name of the Gherkin rule (if any).
-        description (str | None): The description of the Gherkin rule (if any).
+        name (str | None): The name of the rule.
+        description (str | None): The description of the rule.
+
+    Methods:
+        __init__() -> None:
+            Initialize the Rule object with default values.
+        __str__() -> str:
+            Return the string representation of the Rule object.
+        to_string() -> str:
+            Convert the Rule object to a string representation.
+        to_dictionary() -> Dict[str, Any]:
+            Convert the Rule object to a dictionary representation.
+        process(text: str, validate: bool) -> bool:
+            Process the rule text and validate its syntax.
     """
 
     name: str | None
     description: str | None
 
     def __init__(self) -> None:
-        """Initialize a Gherkin rule with default empty components."""
+        """Initialize the Rule object with default values."""
         self.name = None
         self.description = None
 
     def __str__(self) -> str:
-        """Return string representation of the Gherkin rule."""
+        """Return the string representation of the Rule object.
+
+        Returns:
+            str: The string representation of the Rule object.
+        """
         return self.to_string()
 
     def to_string(self) -> str:
-        """Convert the Gherkin rule into a formatted string representation.
+        """Convert the Rule object to a string representation.
 
         Returns:
-            str: A string representation of the Gherkin rule.
+            str: The string representation of the Rule object.
         """
         lines: List[str] = []
         if self.name is not None:
@@ -42,10 +58,10 @@ class Rule:
         return "\n".join(lines)
 
     def to_dictionary(self) -> Dict[str, Any]:
-        """Convert the Gherkin rule into a dictionary representation.
+        """Convert the Rule object to a dictionary representation.
 
         Returns:
-            Dict[str, Any]: Dictionary containing the Gherkin rule components.
+            Dict[str, Any]: The dictionary representation of the Rule object.
         """
         return {
             "name": self.name,
@@ -53,18 +69,18 @@ class Rule:
         }
 
     def process(self, text: str, validate: bool) -> bool:
-        """Process Gherkin rule content and update the object accordingly.
+        """Process the rule text and validate its syntax.
 
         Args:
-            text (str): The Gherkin rule content to be processed.
-            validate (bool): If True, performs syntax validation.
+            text (str): The rule text to be processed.
+            validate (bool): Whether to validate the syntax during processing.
 
         Returns:
-            bool: True if processing is successful.
+            bool: True if the syntax is valid, False otherwise.
 
         Raises:
-            TypeError: If `text` is not a string.
-            ValueError: If `validate` is True and the Gherkin rule has issues.
+            TypeError: If the 'text' argument is not a string.
+            ValueError: If validation fails for the rule syntax.
         """
         if not isinstance(text, str):
             raise TypeError("Variable 'text' is not string type")

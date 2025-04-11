@@ -1,6 +1,6 @@
-"""Gherkin Step Processor Module.
+"""Define the Step class, which represents a single step in a Gherkin scenario.
 
-This module provides functionality to process Gherkin step content into a Python class representation.
+The Step class provides functionality to process, validate, and convert step components into string or dictionary representations.
 """
 
 from dataclasses import dataclass
@@ -12,13 +12,25 @@ from gherkin_processor.private.formatters import format_table
 
 @dataclass
 class Step:
-    """Represent a Gherkin step with its components.
+    """Represent a single step in a Gherkin scenario.
 
     Attributes:
-        type (str): The type of the Gherkin step.
-        text (str): The text of the Gherkin step.
-        table (Dict[str, List[str]] | None): The table present in the Gherkin step (if any).
-        doc_string (str | None): The document string present in the Gherkin step (if any).
+        type (str): The type of the step (e.g., Given, When, Then, But).
+        text (str): The text of the step.
+        table (Dict[str, List[str]] | None): The table associated with the step, if any.
+        doc_string (str | None): The doc-string associated with the step, if any.
+
+    Methods:
+        __init__() -> None:
+            Initialize the Step object with default values.
+        __str__() -> str:
+            Return the string representation of the Step object.
+        to_string() -> str:
+            Convert the Step object to a string representation.
+        to_dictionary() -> Dict[str, Any]:
+            Convert the Step object to a dictionary representation.
+        process(text: str, validate: bool) -> bool:
+            Process the step text and validate its syntax.
     """
 
     type: str
@@ -27,21 +39,25 @@ class Step:
     doc_string: str | None
 
     def __init__(self) -> None:
-        """Initialize a Gherkin step with default empty components."""
+        """Initialize the Step object with default values."""
         self.type = ""
         self.text = ""
         self.table = None
         self.doc_string = None
 
     def __str__(self) -> str:
-        """Return string representation of the Gherkin step."""
+        """Return the string representation of the Step object.
+
+        Returns:
+            str: The string representation of the Step object.
+        """
         return self.to_string()
 
     def to_string(self) -> str:
-        """Convert the Gherkin step into a formatted string representation.
+        """Convert the Step object to a string representation.
 
         Returns:
-            str: A string representation of the Gherkin step.
+            str: The string representation of the Step object.
         """
         lines: List[str] = []
         lines.append(f"{self.type} {self.text}")
@@ -52,10 +68,10 @@ class Step:
         return "\n".join(lines)
 
     def to_dictionary(self) -> Dict[str, Any]:
-        """Convert the Gherkin step into a dictionary representation.
+        """Convert the Step object to a dictionary representation.
 
         Returns:
-            Dict[str, Any]: Dictionary containing the Gherkin step components.
+            Dict[str, Any]: The dictionary representation of the Step object.
         """
         return {
             "type": self.type,
@@ -65,18 +81,18 @@ class Step:
         }
 
     def process(self, text: str, validate: bool) -> bool:
-        """Process Gherkin step content and update the object accordingly.
+        """Process the step text and validate its syntax.
 
         Args:
-            text (str): The Gherkin step content to be processed.
-            validate (bool): If True, performs syntax validation.
+            text (str): The step text to be processed.
+            validate (bool): Whether to validate the syntax during processing.
 
         Returns:
-            bool: True if processing is successful.
+            bool: True if the syntax is valid, False otherwise.
 
         Raises:
-            TypeError: If `text` is not a string.
-            ValueError: If `validate` is True and the Gherkin step has issues.
+            TypeError: If the 'text' argument is not a string.
+            ValueError: If validation fails for the step syntax.
         """
         if not isinstance(text, str):
             raise TypeError("Variable 'text' is not string type")

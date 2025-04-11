@@ -1,6 +1,6 @@
-"""Gherkin Background Processor Module.
+"""Define the Background class, which represents a Gherkin background.
 
-This module provides functionality to process Gherkin background content into a Python class representation.
+The Background class provides functionality to process, validate, and convert background components into string or dictionary representations.
 """
 
 from dataclasses import dataclass
@@ -12,30 +12,46 @@ from gherkin_processor.private.positions import ALLOWED_BACKGROUND_POSITIONS
 
 @dataclass
 class Background:
-    """Represent a Gherkin background with its components.
+    """Represent a Gherkin background.
 
     Attributes:
-        description (str | None): The description of the Gherkin background (if any).
-        steps (List[Step] | None): The list of steps present in the Gherkin background (if any).
+        description (str | None): The description of the background.
+        steps (List[Step] | None): The steps in the background.
+
+    Methods:
+        __init__() -> None:
+            Initialize the Background object with default values.
+        __str__() -> str:
+            Return the string representation of the Background object.
+        to_string() -> str:
+            Convert the Background object to a string representation.
+        to_dictionary() -> Dict[str, Any]:
+            Convert the Background object to a dictionary representation.
+        process(text: str, validate: bool) -> bool:
+            Process the background text and validate its syntax.
     """
 
     description: str | None
     steps: List[Step] | None
 
     def __init__(self) -> None:
-        """Initialize a Gherkin background with default empty components."""
+        """Initialize the Background object with default values."""
         self.description = None
         self.steps = None
 
     def __str__(self) -> str:
-        """Return string representation of the Gherkin background."""
+        """Return the string representation of the Background object.
+
+        Returns:
+            str: The string representation of the Background object.
+        """
         return self.to_string()
 
     def to_string(self) -> str:
-        """Convert the Gherkin background into a formatted string representation.
+        """Convert the Background object to a string representation.
 
         Returns:
-            str: A string representation of the Gherkin background.
+            str: The string representation of the Background object.
         """
         lines: List[str] = []
         if self.description is not None:
@@ -45,10 +61,10 @@ class Background:
         return "\n".join(lines)
 
     def to_dictionary(self) -> Dict[str, Any]:
-        """Convert the Gherkin background into a dictionary representation.
+        """Convert the Background object to a dictionary representation.
 
         Returns:
-            Dict[str, Any]: Dictionary containing the Gherkin background components.
+            Dict[str, Any]: The dictionary representation of the Background object.
         """
         return {
             "description": self.description,
@@ -56,18 +72,18 @@ class Background:
         }
 
     def process(self, text: str, validate: bool) -> bool:
-        """Process Gherkin background content and update the object accordingly.
+        """Process the background text and validate its syntax.
 
         Args:
-            text (str): The Gherkin background content to be processed.
-            validate (bool): If True, performs syntax validation.
+            text (str): The background text to be processed.
+            validate (bool): Whether to validate the syntax during processing.
 
         Returns:
-            bool: True if processing is successful.
+            bool: True if the syntax is valid, False otherwise.
 
         Raises:
-            TypeError: If `text` is not a string.
-            ValueError: If `validate` is True and the Gherkin background has issues.
+            TypeError: If the 'text' argument is not a string.
+            ValueError: If validation fails for the background syntax.
         """
         if not isinstance(text, str):
             raise TypeError("Variable 'text' is not string type")

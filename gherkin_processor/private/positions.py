@@ -1,7 +1,10 @@
-"""Position Utilities Module.
+"""Define allowed positions for Gherkin components.
 
-This module provides restrictions for the position of different keywords.
+This module provides dictionaries that define the valid positions for various Gherkin components
+such as features, rules, backgrounds, scenarios, and steps. These dictionaries are used to validate
+the structure and syntax of Gherkin files during processing.
 """
+
 from typing import Dict, List
 
 given_step_collection = ["GIVEN", "GIVEN TABLE", "GIVEN DOC-STRING"]

@@ -1,14 +1,12 @@
-"""Main Entry Point.
+"""Provide the main entry point for the Gherkin processor.
 
-This module serves as the main entry point for the command-line interface (CLI)
-component of the project. It initializes and executes the necessary functionality
-when run as a standalone script.
+This module defines the command-line interface for processing, validating, and saving Gherkin files
+in various formats.
 """
 
-
+import sys
 from argparse import ArgumentParser, HelpFormatter, Namespace
 from os.path import abspath, basename, dirname, splitext
-from sys import stderr
 from typing import Any
 
 from gherkin_processor.gherkin import Gherkin
@@ -16,24 +14,22 @@ from gherkin_processor.utils import load, save
 
 
 class CustomHelpFormatter(HelpFormatter):
-    """Custom argument formatter for improved CLI help display.
-
-    Extends the default HelpFormatter to enhance readability by adjusting help text formatting.
-
-    Args:
-        prog (Any): The program name to display in help messages.
-    """
+    """Custom help formatter for the command-line interface."""
 
     def __init__(self, prog: Any):
-        """Initialize the formatter with a custom help display width."""
+        """Initialize the CustomHelpFormatter with the program name.
+
+        Args:
+            prog (Any): The program name.
+        """
         super().__init__(prog, max_help_position=36)
 
 
 def parse_arguments() -> Namespace:
-    """Parse command-line arguments for Gherkin file processing.
+    """Parse command-line arguments.
 
     Returns:
-        Namespace: Parsed arguments containing input/output file paths and processing options.
+        Namespace: The parsed arguments as a Namespace object.
     """
     parser = ArgumentParser(description="Process and save Ghekin files in different formats.", formatter_class=CustomHelpFormatter)
 
@@ -49,11 +45,11 @@ def parse_arguments() -> Namespace:
 
 
 def save_gherkin(args: Namespace, gherkin: Gherkin) -> None:
-    """Save the Gherkin file in its standard syntax format.
+    """Save the Gherkin object in Gherkin format.
 
     Args:
-        args (Namespace): Parsed CLI arguments.
-        gherkin (Gherkin): The loaded Gherkin data to be saved.
+        args (Namespace): The command-line arguments.
+        gherkin (Gherkin): The Gherkin object to save.
     """
     path = abspath(args.input)
     directory = dirname(path)
@@ -69,11 +65,11 @@ def save_gherkin(args: Namespace, gherkin: Gherkin) -> None:
 
 
 def save_json(args: Namespace, gherkin: Gherkin) -> None:
-    """Save the Gherkin file in JSON format.
+    """Save the Gherkin object in JSON format.
 
     Args:
-        args (Namespace): Parsed CLI arguments.
-        gherkin (Gherkin): The loaded Gherkin data to be saved.
+        args (Namespace): The command-line arguments.
+        gherkin (Gherkin): The Gherkin object to save.
     """
     path = abspath(args.input)
     directory = dirname(path)
@@ -89,18 +85,18 @@ def save_json(args: Namespace, gherkin: Gherkin) -> None:
 
 
 def main() -> None:
-    """Execute functions for the CLI component.
+    """Run the Gherkin processor command-line interface.
 
-    Parses command-line arguments, loads the input Gherkin file, and performs the specified actions
-    such as printing, validation, or saving in different formats.
+    This function parses the command-line arguments, processes the input file, and performs actions
+    such as saving the file in different formats, validating the syntax, or printing the Gherkin syntax.
     """
     args = parse_arguments()
 
     try:
         processed = load(args.input, args.validate)
     except (IOError, TypeError, ValueError) as e:
-        print(e, file=stderr)
-        return
+        print(e, file=sys.stderr)
+        sys.exit(1)
 
     gherkin = Gherkin() if processed is None else processed
 
@@ -116,3 +112,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+    sys.exit(0)
