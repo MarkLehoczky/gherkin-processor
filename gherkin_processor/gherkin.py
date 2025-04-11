@@ -76,9 +76,12 @@ class Gherkin:
             str: The string representation of the Gherkin object.
         """
         lines: List[str] = []
-        lines.append(str(self.feature)) if str(self.feature) else None
-        lines.append(str(self.rule)) if str(self.rule) else None
-        lines.append(str(self.background)) if str(self.background) else None
+        if str(self.feature):
+            lines.append(str(self.feature))
+        if str(self.rule):
+            lines.append(str(self.rule))
+        if str(self.background):
+            lines.append(str(self.background))
         lines.extend(map(str, self.scenarios))
         return "\n".join(lines)
 
