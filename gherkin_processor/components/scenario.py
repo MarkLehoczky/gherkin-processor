@@ -68,6 +68,8 @@ class Scenario:
         lines.extend(str(step) for step in self.steps)
         if self.outline is not None:
             lines.append(format_table(self.outline))
+        if self.tags or self.name or self.description or self.steps or self.outline:
+            lines.append("")
         return "\n".join(lines)
 
     def to_dictionary(self) -> Dict[str, Any]:

@@ -54,6 +54,7 @@ def save_gherkin(args: Namespace, gherkin: Gherkin) -> None:
     path = abspath(args.input)
     directory = dirname(path)
     filename, extension = splitext(basename(path))
+    extension = extension.removeprefix(".")
     args.output = args.input if args.output is None else args.output
     args.output = args.output.replace("<DIR>", directory).replace("<DIRECTORY>", directory)
     args.output = args.output.replace("<NAME>", filename).replace("<FILENAME>", filename)
@@ -74,11 +75,12 @@ def save_json(args: Namespace, gherkin: Gherkin) -> None:
     path = abspath(args.input)
     directory = dirname(path)
     filename, extension = splitext(basename(path))
+    extension = extension.removeprefix(".")
     args.output = args.input if args.output is None else args.output
     args.output = args.output.replace("<DIR>", directory).replace("<DIRECTORY>", directory)
     args.output = args.output.replace("<NAME>", filename).replace("<FILENAME>", filename)
 
-    defined_output = args.output.replace(extension, ".json").replace("<EXT>", ".json").replace("<EXTENSION>", ".json")
+    defined_output = args.output.replace(extension, "json").replace("<EXT>", "json").replace("<EXTENSION>", "json")
     if not save(gherkin, defined_output, "JSON", False):
         if args.yes or input(f"File '{defined_output}' already exists. Would you like to replace it? [y/n] ").upper() in ["Y", "YES"]:
             save(gherkin, defined_output, "JSON", True)

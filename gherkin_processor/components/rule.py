@@ -51,10 +51,12 @@ class Rule:
             str: The string representation of the Rule object.
         """
         lines: List[str] = []
-        if self.name is not None:
+        if self.name:
             lines.append(f"Rule: {self.name}")
-        if self.description is not None:
+        if self.description:
             lines.append(self.description)
+        if self.name or self.description:
+            lines.append("")
         return "\n".join(lines)
 
     def to_dictionary(self) -> Dict[str, Any]:

@@ -51,9 +51,12 @@ class Feature:
             str: The string representation of the Feature object.
         """
         lines: List[str] = []
-        lines.append(f"Feature: {self.name}")
-        if self.description is not None:
+        if self.name:
+            lines.append(f"Feature: {self.name}")
+        if self.description:
             lines.append(self.description)
+        if self.name or self.description:
+            lines.append("")
         return "\n".join(lines)
 
     def to_dictionary(self) -> Dict[str, Any]:

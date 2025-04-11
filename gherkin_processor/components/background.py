@@ -54,10 +54,14 @@ class Background:
             str: The string representation of the Background object.
         """
         lines: List[str] = []
-        if self.description is not None:
+        if self.steps or self.description:
+            lines.append("Background:")
+        if self.description:
             lines.append(self.description)
         if self.steps is not None:
             lines.extend(str(step) for step in self.steps)
+        if self.steps or self.description:
+            lines.append("")
         return "\n".join(lines)
 
     def to_dictionary(self) -> Dict[str, Any]:

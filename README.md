@@ -159,7 +159,7 @@ save(gherkin, "user_login.feature", "GHERKIN")
 save(gherkin, "user_login.json", "JSON")
 ```
 
-See the Module [documentation](docs/modules.md) and [examples](examples/modules.ipynb) and the Data class structure [documentation](docs/classes.md) and [examples](examples/classes.ipynb) for details.
+See the utilities [documentation](docs/utilities.md) and class structure [documentation](docs/classes.md) for details.
 
 ## License
 

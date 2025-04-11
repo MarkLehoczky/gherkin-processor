@@ -1,105 +1,99 @@
 # Gherkin Processor Classes
 
-This document provides an overview of the classes used in the Gherkin Processor package.
-
----
+This document provides an overview of the classes used in the Gherkin Processor project.
 
 ## Gherkin
 
-Represents a Gherkin document with its components.
+Represents a Gherkin file and its components.
 
 ### Attributes
-
-- `file` (Optional[str]): The file path of the Gherkin source (if any).
-- `feature` (Feature): The feature definition in the Gherkin document.
-- `rule` (Rule): The rule section of the Gherkin document.
-- `background` (Background): The background section of the Gherkin document.
-- `scenarios` (List[Scenario]): The list of scenarios present in the document.
+- `file (Optional[str])`: The file path of the Gherkin file being processed.
+- `feature (Feature)`: The [feature](#feature) component of the Gherkin file.
+- `rule (Rule)`: The [rule](#rule) component of the Gherkin file.
+- `background (Background)`: The [background](#background) component of the Gherkin file.
+- `scenarios (List[Scenario])`: A list of [scenarios](#scenario) defined in the Gherkin file.
 
 ### Methods
-
-- `to_string() -> str`: Converts the Gherkin document into a formatted string representation.
-- `to_dictionary() -> Dict[str, Any]`: Converts the Gherkin document into a dictionary representation.
-- `process(text: str, validate: bool) -> bool`: Processes Gherkin syntax content and updates the object accordingly.
+- `to_string() -> str`: Converts the Gherkin object to a string representation.
+- `to_dictionary() -> Dict[str, Any]`: Converts the Gherkin object to a dictionary representation.
+- `process(text: str, validate: bool) -> bool`: Processes and validates the Gherkin text.
 
 ---
 
 ## Feature
 
-Represents a Gherkin feature with its components.
+Represents a Gherkin feature.
 
 ### Attributes
-
-- `name` (str): The name of the Gherkin feature.
-- `description` (Optional[str]): The description of the Gherkin feature (if any).
+- `name (str)`: The name of the feature.
+- `description (str | None)`: The description of the feature.
 
 ### Methods
+- `to_string() -> str`: Converts the feature to a string representation.
+- `to_dictionary() -> Dict[str, Any]`: Converts the feature to a dictionary representation.
+- `process(text: str, validate: bool) -> bool`: Processes and validates the feature text.
 
-- `to_string() -> str`: Converts the Gherkin feature into a formatted string representation.
-- `to_dictionary() -> Dict[str, Any]`: Converts the Gherkin feature into a dictionary representation.
-- `process(text: str, validate: bool) -> bool`: Processes Gherkin feature content and updates the object accordingly.
+---
 
 ## Rule
 
-Represents a Gherkin rule with its components.
+Represents a Gherkin rule.
 
 ### Attributes
-
-- `name` (Optional[str]): The name of the Gherkin rule (if any).
-- `description` (Optional[str]): The description of the Gherkin rule (if any).
+- `name (str | None)`: The name of the rule.
+- `description (str | None)`: The description of the rule.
 
 ### Methods
+- `to_string() -> str`: Converts the rule to a string representation.
+- `to_dictionary() -> Dict[str, Any]`: Converts the rule to a dictionary representation.
+- `process(text: str, validate: bool) -> bool`: Processes and validates the rule text.
 
-- `to_string() -> str`: Converts the Gherkin rule into a formatted string representation.
-- `to_dictionary() -> Dict[str, Any]`: Converts the Gherkin rule into a dictionary representation.
-- `process(text: str, validate: bool) -> bool`: Processes Gherkin rule content and updates the object accordingly.
+---
 
 ## Background
 
-Represents a Gherkin background with its components.
+Represents a Gherkin background.
 
 ### Attributes
-
-- `description` (Optional[str]): The description of the Gherkin background (if any).
-- `steps` (Optional[List[Step]]): The list of steps present in the Gherkin background (if any).
+- `description (str | None)`: The description of the background.
+- `steps (List[Step] | None)`: The [steps](#step) in the background.
 
 ### Methods
+- `to_string() -> str`: Converts the background to a string representation.
+- `to_dictionary() -> Dict[str, Any]`: Converts the background to a dictionary representation.
+- `process(text: str, validate: bool) -> bool`: Processes and validates the background text.
 
-- `to_string() -> str`: Converts the Gherkin background into a formatted string representation.
-- `to_dictionary() -> Dict[str, Any]`: Converts the Gherkin background into a dictionary representation.
-- `process(text: str, validate: bool) -> bool`: Processes Gherkin background content and updates the object accordingly.
+---
 
 ## Scenario
 
-Represents a Gherkin scenario with its components.
+Represents a Gherkin scenario.
 
 ### Attributes
-
-- `tags` (Optional[List[str]]): The tags of the Gherkin scenario (if any).
-- `name` (str): The name of the Gherkin scenario.
-- `description` (Optional[str]): The description of the Gherkin scenario (if any).
-- `steps` (List[Step]): The list of steps present in the Gherkin scenario (if any).
-- `outline` (Optional[Dict[str, List[str]]]): The outline table present in the Gherkin scenario (if any).
+- `tags (List[str] | None)`: The tags associated with the scenario.
+- `name (str)`: The name of the scenario.
+- `description (str | None)`: The description of the scenario.
+- `steps (List[Step])`: The [steps](#step) in the scenario.
+- `outline (Dict[str, List[str]] | None)`: The outline table for scenario outlines.
 
 ### Methods
+- `to_string() -> str`: Converts the scenario to a string representation.
+- `to_dictionary() -> Dict[str, Any]`: Converts the scenario to a dictionary representation.
+- `process(text: str, validate: bool) -> bool`: Processes and validates the scenario text.
 
-- `to_string() -> str`: Converts the Gherkin scenario into a formatted string representation.
-- `to_dictionary() -> Dict[str, Any]`: Converts the Gherkin scenario into a dictionary representation.
-- `process(text: str, validate: bool) -> bool`: Processes Gherkin scenario content and updates the object accordingly.
+---
 
 ## Step
 
-Represents a Gherkin step with its components.
+Represents a single step in a Gherkin scenario.
 
 ### Attributes
-
-- `type` (str): The type of the Gherkin step.
-- `text` (str): The text of the Gherkin step.
-- `table` (Optional[Dict[str, List[str]]]): The table present in the Gherkin step (if any).
-- `doc_string` (Optional[str]): The document string present in the Gherkin step (if any).
+- `type (str)`: The type of the step (e.g., Given, When, Then, But).
+- `text (str)`: The text of the step.
+- `table (Dict[str, List[str]] | None)`: The table associated with the step, if any.
+- `doc_string (str | None)`: The doc-string associated with the step, if any.
 
 ### Methods
-
-- `to_string() -> str`: Converts the Gherkin step into a formatted string representation.
-- `to_dictionary() -> Dict[str, Any]`: Converts the Gherkin step into a dictionary representation.
-- `process(text: str, validate: bool) -> bool`: Processes Gherkin step content and updates the object accordingly.
+- `to_string() -> str`: Converts the step to a string representation.
+- `to_dictionary() -> Dict[str, Any]`: Converts the step to a dictionary representation.
+- `process(text: str, validate: bool) -> bool`: Processes and validates the step text.
